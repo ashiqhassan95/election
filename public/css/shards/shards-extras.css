@@ -1,0 +1,557 @@
+.shards-landing-page--1 .welcome {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    background: url("/images/shards/agency-landing/welcome-cover.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.shards-landing-page--1 .welcome:before {
+    position: absolute;
+    z-index: 0;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .8;
+    background: #007bff;
+}
+
+@media (max-width: 767.98px) {
+    .shards-landing-page--1 .welcome .inner-wrapper {
+        text-align: center;
+    }
+}
+
+@media (max-width: 400px) {
+    .shards-landing-page--1 .welcome .welcome-heading {
+        font-size: 2.415rem;
+    }
+}
+
+.shards-landing-page--1 .section-title {
+    position: relative;
+}
+
+.shards-landing-page--1 .section-title:after {
+    content: '';
+    width: 30px;
+    height: 2px;
+    background: #007bff;
+    position: absolute;
+    left: 50%;
+    margin-left: -15px;
+    bottom: -20px;
+}
+
+.shards-landing-page--1 .feature .icon {
+    border-radius: 50%;
+    min-width: 65px;
+    height: 65px;
+    line-height: 65px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(33, 37, 41, 0.1), 0 7px 14px rgba(33, 37, 41, 0.1);
+    font-size: 27px;
+}
+
+.shards-landing-page--1 .section {
+    border-bottom: 1px solid #eaebed;
+}
+
+.shards-landing-page--1 .section-invert {
+    background: #f9fafc;
+}
+
+.shards-landing-page--1 .testimonials .avatar {
+    max-width: 80px;
+    overflow: hidden;
+}
+
+.shards-app-promo-page--1 .welcome {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    background: url("/images/shards/app-promo/welcome-cover.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.shards-app-promo-page--1 .welcome:before {
+    position: absolute;
+    z-index: 0;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .9;
+    background: #212529;
+}
+
+@media (max-width: 991.98px) {
+    .shards-app-promo-page--1 .welcome {
+        height: auto;
+    }
+
+    .shards-app-promo-page--1 .welcome .header-social-icons {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .shards-app-promo-page--1 .welcome {
+        height: auto;
+    }
+
+    .shards-app-promo-page--1 .welcome .inner-wrapper {
+        padding-top: 4.5rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 400px) {
+    .shards-app-promo-page--1 .welcome .welcome-heading {
+        font-size: 2.415rem;
+    }
+}
+
+.shards-app-promo-page--1 .welcome .iphone-mockup {
+    max-width: 85%;
+}
+
+.shards-app-promo-page--1 .section-title {
+    position: relative;
+}
+
+.shards-app-promo-page--1 .section-title:after {
+    content: '';
+    width: 30px;
+    height: 2px;
+    background: #17c671;
+    position: absolute;
+    left: 50%;
+    margin-left: -15px;
+    bottom: -20px;
+}
+
+.shards-app-promo-page--1 .section-title.underline--left:after {
+    left: 0;
+    margin-left: 0;
+}
+
+.shards-app-promo-page--1 .app-screenshot {
+    background: url("/images/shards/app-promo/features-background.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.shards-app-promo-page--1 .app-screenshot:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #e9ecef;
+    opacity: .6;
+}
+
+.shards-app-promo-page--1 .app-screenshot img {
+    max-width: 300px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 13px 25px rgba(0, 0, 0, 0.05), 0 60px 100px rgba(192, 192, 192, 0.5);
+}
+
+@media (max-width: 991.98px) {
+    .shards-app-promo-page--1 .app-screenshot img {
+        display: table;
+        position: static;
+        -webkit-transform: translate(0);
+        transform: translate(0);
+        margin: 0 auto;
+    }
+}
+
+.shards-app-promo-page--1 .feature .icon {
+    border-radius: 50%;
+    min-width: 65px;
+    height: 65px;
+    line-height: 65px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(33, 37, 41, 0.1), 0 7px 14px rgba(33, 37, 41, 0.1);
+    font-size: 27px;
+}
+
+@media (max-width: 767.98px) {
+    .shards-app-promo-page--1 .feature .icon {
+        margin-right: 1.5rem !important;
+    }
+}
+
+.shards-app-promo-page--1 .blog .card-img-top {
+    height: 100%;
+}
+
+.shards-app-promo-page--1 .section {
+    border-bottom: 1px solid #eaebed;
+}
+
+.shards-app-promo-page--1 .section-invert {
+    background: #f9fafc;
+}
+
+.shards-app-promo-page--1 .testimonials .avatar {
+    max-width: 80px;
+    overflow: hidden;
+}
+
+@media (max-width: 767.98px) {
+    .shards-app-promo-page--1 .subscribe input, .shards-app-promo-page--1 .subscribe button {
+        width: 100%;
+    }
+}
+
+/*# sourceMappingURL=shards-extras.css.map */
+
+/* ahs: active, hover, show */
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.animated.infinite {
+    animation-iteration-count: infinite;
+}
+
+.animated.delay-1s {
+    animation-delay: 1s;
+}
+
+.animated.delay-2s {
+    animation-delay: 2s;
+}
+
+.animated.delay-3s {
+    animation-delay: 3s;
+}
+
+.animated.delay-4s {
+    animation-delay: 4s;
+}
+
+.animated.delay-5s {
+    animation-delay: 5s;
+}
+
+.animated.fast {
+    animation-duration: 800ms;
+}
+
+.animated.faster {
+    animation-duration: 500ms;
+}
+
+.animated.slow {
+    animation-duration: 2s;
+}
+
+.animated.slower {
+    animation-duration: 3s;
+}
+
+@media (prefers-reduced-motion) {
+    .animated {
+        animation: unset !important;
+        transition: none !important;
+    }
+}
+
+/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+@keyframes pulse {
+    from {
+        transform: scale3d(1, 1, 1);
+    }
+    50% {
+        transform: scale3d(1.05, 1.05, 1.05);
+    }
+    to {
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+.pulse {
+    animation-name: pulse;
+}
+
+@media (max-width: 860px) {
+    .color-switcher,
+    .color-switcher-toggle {
+        display: none !important;
+    }
+}
+
+.color-switcher {
+    position: fixed;
+    right: 24px;
+    bottom: 30px;
+    z-index: 2001;
+    background: #181a23;
+    padding: 20px 20px;
+    padding-top: 25px;
+    border-radius: 5px;
+    transform: translateX(120%);
+    transition: transform 300ms ease-in-out, left 300ms ease-in-out;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1), 0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12), 0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
+}
+
+.color-switcher.visible {
+    transform: translateX(0);
+    right: 24px;
+}
+
+.color-switcher h5 {
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 0;
+    line-height: 1;
+    letter-spacing: 2px;
+    color: #84899e;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.color-switcher .accent-colors {
+    display: flex;
+    padding: 5px;
+    margin: 15px auto 20px auto;
+    justify-content: center;
+}
+
+.color-switcher .accent-colors li {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    transition: transform 180ms ease-in-out;
+    text-align: center;
+    margin: 0 4px;
+}
+
+.color-switcher .accent-colors li:hover:not(.active) {
+    cursor: pointer;
+    transform: scale(1.3);
+}
+
+.color-switcher .accent-colors li i {
+    transition: opacity 180ms ease-in-out;
+    line-height: 1;
+    color: #fff;
+    font-size: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+}
+
+.color-switcher .accent-colors li.active {
+    transform: scale(1.5);
+}
+
+.color-switcher .accent-colors li.active i {
+    opacity: 1;
+}
+
+.color-switcher .accent-colors li.accent-primary {
+    background-color: #007bff;
+}
+
+.color-switcher .accent-colors li.accent-secondary {
+    background-color: #5A6169;
+}
+
+.color-switcher .accent-colors li.accent-success {
+    background-color: #17c671;
+}
+
+.color-switcher .accent-colors li.accent-info {
+    background-color: #00b8d8;
+}
+
+.color-switcher .accent-colors li.accent-warning {
+    background-color: #ffb400;
+}
+
+.color-switcher .accent-colors li.accent-danger {
+    background-color: #c4183c;
+}
+
+.color-switcher .accent-colors li.accent-royal-blue {
+    background-color: #674EEC;
+}
+
+.color-switcher .accent-colors li.accent-java {
+    background-color: #1ADBA2;
+}
+
+.color-switcher .accent-colors li.accent-salmon {
+    background-color: #FF4169;
+}
+
+.color-switcher .actions {
+    margin: 15px 0;
+}
+
+.color-switcher .social-actions {
+    padding: 10px 0;
+    border-top: 1px solid #2c2f44;
+}
+
+.color-switcher .social-actions .inner-wrapper {
+    display: table;
+    margin: 0 auto;
+}
+
+.color-switcher .social-actions iframe {
+    margin: 5px 0 0 10px;
+}
+
+.color-switcher #social-share {
+    display: table;
+    margin: 0 auto;
+}
+
+.color-switcher .sharrre .box {
+    float: left;
+}
+
+.color-switcher .sharrre .count {
+    color: #444444;
+    display: block;
+    font-size: 17px;
+    line-height: 34px;
+    height: 34px;
+    padding: 4px 0;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    width: 50px;
+    background-color: #eee;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.color-switcher .sharrre .share {
+    color: #FFFFFF;
+    display: block;
+    font-size: 11px;
+    height: 16px;
+    line-height: 16px;
+    margin-top: 3px;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    width: 50px;
+    background-color: #9CCE39;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.color-switcher .sharrre .buttons {
+    display: block;
+}
+
+.color-switcher .sharrre .button {
+    float: left;
+    margin-left: 10px;
+}
+
+.color-switcher .sharrre .button.facebook {
+    margin-left: 0;
+}
+
+.color-switcher .close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 15px;
+    background: #2d3044;
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 25px;
+}
+
+.color-switcher-toggle {
+    position: fixed;
+    right: 26px;
+    bottom: 33px;
+    z-index: 2000;
+    width: 45px;
+    height: 45px;
+    background: #2d53fe;
+    color: #fff;
+    text-align: center;
+    line-height: 45px;
+    font-size: 23px;
+    border-radius: 50%;
+    transition: color 200ms ease-in-out;
+    animation-duration: 1500ms;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1), 0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12), 0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
+}
+
+.color-switcher-toggle:hover {
+    cursor: pointer;
+    color: #fff;
+}
+
+.color-switcher-toggle i {
+    top: 3px;
+}
+
+.social-wrapper {
+    position: relative;
+}
+
+.social-wrapper .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #181a23;
+}
+
+.social-wrapper .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+}
+
+.spinner {
+    height: 20px;
+    width: 20px;
+    animation: rotate 0.8s infinite linear;
+    border: 2px solid #84899e;
+    border-right-color: transparent;
+    border-radius: 50%;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

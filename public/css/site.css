@@ -1,0 +1,20 @@
+.dataTables_wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.bg-card-footer {
+  background: #efefef;
+}
+
+.auth-form {
+  max-width: 100%;
+}
+
+.shards-landing-page--1 .welcome {
+  min-height: 650px;
+}
+
+.shards-landing-page--1 .welcome:before {
+  background: #2b2b2b;
+}
+
