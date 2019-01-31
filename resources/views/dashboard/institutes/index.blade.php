@@ -30,7 +30,7 @@
     </div>
     <!-- End Page Header -->
     <!-- Transaction History Table -->
-    <table class="transaction-history d-none">
+    <table class="data-table institutes-table d-none">
         <thead>
         <tr>
             <th>Name</th>
@@ -82,72 +82,7 @@
 @push('js-body')
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
-    <script src="{{ asset('js/shards-pro/app/app-transaction-history.1.2.0.min.js') }}"></script>
+    <script>
+        $('.data-table').DataTable({responsive: !0});
+    </script>
 @endpush
-
-{{--@extends('dashboard.layouts.master')--}}
-{{--@section('title')--}}
-    {{--Institutes--}}
-{{--@endsection--}}
-
-{{--@section('content')--}}
-    {{--<div class="row mt-4">--}}
-        {{--<div class="col">--}}
-            {{--<div class="d-flex mb-3 align-items-center">--}}
-                {{--<div class="flex-grow-1">--}}
-                    {{--<h4 class="m-0">Institutes</h4>--}}
-                {{--</div>--}}
-                {{--<div class="d-inline">--}}
-                    {{--<a href="{{ route('dashboard.institutes.create') }}" class="btn btn-primary">Create</a>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-            {{--<table class="table table-bordered table-hover bg-white">--}}
-                {{--<thead class="thead-light">--}}
-                {{--<tr>--}}
-                    {{--<th scope="col">Name</th>--}}
-                    {{--<th scope="col">Address</th>--}}
-                    {{--<th scope="col">City</th>--}}
-                    {{--<th scope="col">State</th>--}}
-                    {{--<th scope="col">Country</th>--}}
-                    {{--<th scope="col">Created at</th>--}}
-                    {{--<th scope="col">Updated at</th>--}}
-                    {{--<th scope="col">Actions</th>--}}
-                {{--</tr>--}}
-                {{--</thead>--}}
-                {{--<tbody>--}}
-                {{--@forelse($institutes as $institute)--}}
-                    {{--<tr>--}}
-                        {{--<td><a href="{{ route('dashboard.institutes.show', $institute->id) }}">{{ $institute->name }}</a></td>--}}
-                        {{--<td>{{ $institute->address }}</td>--}}
-                        {{--<td>{{ $institute->city }}</td>--}}
-                        {{--<td>{{ $institute->state }}</td>--}}
-                        {{--<td>{{ $institute->country }}</td>--}}
-                        {{--<td>{{ date('d-m-Y', strtotime($institute->created_at)) }}</td>--}}
-                        {{--<td>{{ date('d-m-Y', strtotime($institute->updated_at)) }}</td>--}}
-                        {{--<td>--}}
-                            {{--<div class="d-inline">--}}
-                                {{--<a class="btn btn-sm btn-secondary" href="{{ route('dashboard.institutes.edit', $institute->id) }}">Edit</a>--}}
-                                {{--<form class="d-inline" action="{{ route('dashboard.institutes.destroy', $institute->id) }}"--}}
-                                      {{--method="post">--}}
-                                    {{--@csrf--}}
-                                    {{--@method('delete')--}}
-                                    {{--<button class="btn btn-sm btn-secondary">Delete</button>--}}
-                                {{--</form>--}}
-                            {{--</div>--}}
-                        {{--</td>--}}
-                    {{--</tr>--}}
-                {{--@empty--}}
-                    {{--<tr>--}}
-                        {{--<td colspan="4" class="text-center text-danger"><b>no data available</b></td>--}}
-                    {{--</tr>--}}
-                {{--@endforelse--}}
-                {{--</tbody>--}}
-            {{--</table>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-    {{--<div class="row">--}}
-        {{--<div class="col">--}}
-            {{--{{ $institutes->links() }}--}}
-        {{--</div>--}}
-    {{--</div>--}}
-{{--@endsection--}}

@@ -8,7 +8,7 @@
 @endpush
 
 @section('content')
-    <!-- Page Header -->
+
     <div class="page-header row no-gutters py-4">
         @include('dashboard.includes.data-table-top-options', [
             'title' => 'Standards',
@@ -18,10 +18,8 @@
             //'import_link' => route('dashboard.standards.import'),
         ])
     </div>
-    <!-- End Page Header -->
 
-    <!-- Transaction History Table -->
-    <table class="transaction-history d-none">
+    <table class="data-table standards-table d-none">
         <thead>
         <tr>
             <th>Name</th>
@@ -60,12 +58,14 @@
         @endforelse
         </tbody>
     </table>
-    <!-- End Transaction History Table -->
+
 @endsection
 @push('js-body')
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
-    <script src="{{ asset('js/shards-pro/app/app-transaction-history.1.2.0.min.js') }}"></script>
+    <script>
+        $('.data-table').DataTable({responsive: !0});
+    </script>
 @endpush
 
 {{--@extends('dashboard.layouts.master')--}}
