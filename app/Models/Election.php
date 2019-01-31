@@ -35,4 +35,6 @@ class Election extends Model
         else
             return 'Unknown';
     }
+
+
 }

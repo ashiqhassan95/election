@@ -38,10 +38,17 @@
                             <td><strong>Type of election</strong></td>
                             <td>{{ $election->getType() }}</td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span class="text-danger">You will not be able to change the candidates and date time once the election launched. This is to maintain the integrity of the election for the voters.</span>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
-                    <form action="{{ route('dashboard.elections.store') }}" method="post">
+                    <form action="{{ route('dashboard.elections.launch.push') }}" method="post">
                         @csrf
+                        <input type="hidden" name="election_id" value="{{ $election->getKey() }}">
+                        <button class="btn btn-primary">Launch</button>
                     </form>
                 </div>
             </div>

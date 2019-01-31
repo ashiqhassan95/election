@@ -10,6 +10,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 
 class ElectionController extends Controller
 {
@@ -91,7 +92,29 @@ class ElectionController extends Controller
 
     public function launch(Election $election)
     {
-        return view('dashboard.elections.launch', compact('election'));
+        if(is_null($election->url))
+            return view('dashboard.elections.launch', compact('election'));
+        else
+            return view('dashboard.elections.launched', compact('election'));
+    }
+
+    public function launchElection(Request $request)
+    {
+        $election = $this->electionRepository->find($request->get('election_id'));
+        if(Is_null($election->url)){
+            $uid =  Str::random(10);
+            $url = "election/" . $uid;
+
+            while(Election::query()->where('url', $url)->exists()) {
+                $uid =  Str::uuid();
+                $url = "election/" . $uid->toString();
+            }
+
+            $this->electionRepository->update($election->getKey(), ['url'=> $url]);
+
+            $election = $this->electionRepository->find($election->getKey());
+        }
+        return view('dashboard.elections.launched', compact('election'));
     }
 
 }
