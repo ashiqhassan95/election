@@ -6,10 +6,12 @@ use App\Exports\CandidatesExport;
 use App\Helper\SessionHelper;
 use App\Helper\StoreHelper;
 use App\Models\Candidate;
+use App\Models\Voter;
 use App\Repository\Interfaces\ICandidateRepository;
 use App\Repository\Interfaces\IElectionRepository;
 use App\Repository\Interfaces\IPositionRepository;
 use App\Repository\Interfaces\IStandardRepository;
+use App\Repository\Interfaces\IVoterRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -42,15 +44,21 @@ class CandidateController extends Controller
      * @var string
      */
     private $canidateImageDirectory = '/storage/images/candidates/';
+    /**
+     * @var IVoterRepository
+     */
+    private $voterRepository;
 
     public function __construct(ICandidateRepository $candidateRepository, IPositionRepository $positionRepository,
-                                IStandardRepository $standardRepository, IElectionRepository $electionRepository)
+                                IStandardRepository $standardRepository, IElectionRepository $electionRepository,
+                                IVoterRepository $voterRepository)
     {
         $this->middleware('auth')->except('show', 'index');
         $this->candidateRepository = $candidateRepository;
         $this->positionRepository = $positionRepository;
         $this->standardRepository = $standardRepository;
         $this->electionRepository = $electionRepository;
+        $this->voterRepository = $voterRepository;
     }
 
     public function index()
@@ -59,9 +67,11 @@ class CandidateController extends Controller
         return view('dashboard.candidates.index', compact('candidates'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $voter = $this->voterRepository->find($request->get('voter_id'));
         $data = [
+            'voter' => $voter,
             'positions' => $this->positionRepository->all(),
             'standards' => $this->standardRepository->all(),
             'elections' => $this->electionRepository->all(),
@@ -143,6 +153,11 @@ class CandidateController extends Controller
     {
         $this->candidateRepository->delete($candidate->getKey());
         return redirect()->back()->with('message', __('dashboard-success.delete', ['entity' => $this->className]));
+    }
+
+    public function makeCandidate(Request $request, Voter $voter)
+    {
+        return $voter;
     }
 
     public function export($format)

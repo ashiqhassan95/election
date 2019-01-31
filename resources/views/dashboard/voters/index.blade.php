@@ -48,6 +48,13 @@
                 {{--<td>{{ date('d-m-Y', strtotime($voter->updated_at)) }}</td>--}}
                 <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="Table row actions">
+                        <form action="{{ route('dashboard.candidates.create')}}">
+                            <input type="hidden" name="voter_id" value="{{ $voter->getKey() }}">
+                            <button class="btn btn-white" data-title="make it as candidate">
+                                <i class="material-icons">person_add</i>
+                            </button>
+                        </form>
+
                         <a class="btn btn-white"
                            href="{{ route('dashboard.voters.edit', $voter->id) }}"><i
                                     class="material-icons">&#xE254;</i></a>

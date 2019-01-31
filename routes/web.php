@@ -44,6 +44,7 @@ Route::post('/dashboard/voters/import/{format}', 'Dashboard\VoterController@impo
 Route::post('/dashboard/candidates/import/{format}', 'Dashboard\CandidateController@import')->name('dashboard.candidates.import');
 Route::get('/dashboard/elections/{election}/launch', 'Dashboard\ElectionController@launch')->name('dashboard.elections.launch');
 Route::post('/dashboard/elections/launch', 'Dashboard\ElectionController@launchElection')->name('dashboard.elections.launch.push');
+//Route::post('/dashboard/candidate/{voter}/create', 'Dashboard\CandidateController@createCandidate')->name('dashboard.candidate.create');
 
 Route::prefix('dashboard')->namespace('Dashboard')
     ->name('dashboard.')

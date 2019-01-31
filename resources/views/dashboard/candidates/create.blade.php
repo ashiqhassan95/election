@@ -28,14 +28,7 @@
 
                         <div class="form-group">
                             <label for="nameInput">Name</label>
-                            <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                   id="nameInput" name="name" placeholder="First and last name"
-                                   value="{{ old('name') }}">
-                            @foreach($errors->get('name') as $error)
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $error }}</strong>
-                                </span>
-                            @endforeach
+                            <input type="text" id="nameInput" class="form-control" value="{{ $voter->name }}" readonly>
                         </div>
 
                         <div class="form-group">
@@ -64,27 +57,15 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="admissionInput">Admission number</label>
-                                    <input class="form-control{{ $errors->has('admission_number') ? ' is-invalid' : '' }}"
-                                           type="text" name="admission_number" id="admissionInput"
-                                           value="{{ old('admission_number') }}">
-                                    @foreach($errors->get('admission_number') as $error)
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $error }}</strong>
-                                        </span>
-                                    @endforeach
+                                    <input class="form-control" type="text" id="admissionInput"
+                                           value="{{ $voter->admission_number }}" readonly>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label for="rollInput">Roll number</label>
-                                    <input class="form-control{{ $errors->has('roll_number') ? ' is-invalid' : '' }}"
-                                           type="text" name="roll_number" id="rollInput"
-                                           value="{{ old('roll_number') }}">
-                                    @foreach($errors->get('roll_number') as $error)
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $error }}</strong>
-                                        </span>
-                                    @endforeach
+                                    <input class="form-control" type="text" id="rollInput"
+                                           value="{{ $voter->roll_number }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -94,44 +75,33 @@
                                 <label for="gender">Gender</label>
                                 <div class="form-group">
                                     <div class="custom-control custom-radio d-inline mr-3">
-                                        <input type="radio" id="maleRadioInput" name="gender"
-                                               {{ old('gender') == 0 ? 'checked' : '' }} value="0"
-                                               class="form-control custom-control-input">
+                                        <input type="radio" id="maleRadioInput"
+                                               {{ $voter->gender == 0 ? 'checked' : '' }} value="0"
+                                               class="form-control custom-control-input" readonly>
                                         <label class="custom-control-label" for="maleRadioInput">Male</label>
                                     </div>
                                     <div class="custom-control custom-radio d-inline">
-                                        <input type="radio" id="femaleRadioInput" name="gender"
-                                               {{ old('gender') == 1 ? 'checked' : '' }} value="1"
+                                        <input type="radio" id="femaleRadioInput"
+                                               {{ $voter->gender == 1 ? 'checked' : '' }} value="1"
                                                class="form-control custom-control-input">
                                         <label class="custom-control-label" for="femaleRadioInput">Female</label>
                                     </div>
-
-                                    <div class="form-control{{ $errors->has('gender') ? ' is-invalid' : '' }} d-none"></div>
-                                    @foreach($errors->get('gender') as $error)
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $error }}</strong>
-                                        </span>
-                                    @endforeach
                                 </div>
                             </div>
+
                             <div class="col">
                                 <div class="form-group">
                                     <label for="birthDate">Date of birth</label>
                                     <div class="input-group">
-                                        <input class="form-control{{ $errors->has('birth_date') ? ' is-invalid' : '' }}"
+                                        <input class="form-control"
                                                type="text" name="birth_date" id="birthDate"
-                                               value="{{ old('birth_date') }}" data-provide="datepicker"
+                                               value="{{ $voter->birth_date }}" data-provide="datepicker"
                                                autocomplete="off" data-date-format="yyyy-mm-dd">
                                         <span class="input-group-append">
                                             <span class="input-group-text">
                                                 <i class="material-icons">&#xE916;</i>
                                             </span>
                                         </span>
-                                        @foreach($errors->get('birth_date') as $error)
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $error }}</strong>
-                                            </span>
-                                        @endforeach
                                     </div>
 
                                 </div>
@@ -141,7 +111,7 @@
                         <div class="form-group">
                             <label for="classSelect">Select a class</label>
                             <select class="form-control{{ $errors->has('standard_id') ? ' is-invalid' : '' }}"
-                                    name="standard_id" id="classSelect">
+                                    name="standard_id" id="classSelect" readonly>
                                 @foreach($standards as $standard)
                                     <option value="{{ $standard->id }}" {{ old('standard_id') == $standard->id ? 'selected': '' }}>
                                         {{ $standard->name }}
@@ -222,7 +192,7 @@
         });
 
         var clearImageButton = document.querySelector('.js-clear-image-btn');
-        clearImageButton.addEventListener('click', function(e) {
+        clearImageButton.addEventListener('click', function (e) {
             e.preventDefault();
             let imageInput = document.getElementById('imageInput'),
                 label = imageInput.nextElementSibling;
