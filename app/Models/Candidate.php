@@ -13,7 +13,7 @@ class Candidate extends Model
         'voter_id', 'image', 'standard_id', 'position_id', 'election_id', 'institute_id', 'user_id'
     ];
 
-    protected $with = ['user', 'standard', 'position'];
+    //protected $with = ['user', 'standard', 'position', 'voter'];
 
     protected $dates = [
         'birth_date'
@@ -32,6 +32,16 @@ class Candidate extends Model
     public function position()
     {
         return $this->belongsTo(Position::class);
+    }
+
+    public function election()
+    {
+        return $this->belongsTo(Election::class);
+    }
+
+    public function voter()
+    {
+        return $this->belongsTo(Voter::class);
     }
 
     public function gender()

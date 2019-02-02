@@ -28,50 +28,44 @@ class CandidateEloquent implements ICandidateRepository
     /**
      * @inheritDoc
      */
-    public function all($columns = array('*')): Collection
+    public function all($with = null, $columns = array('*')): Collection
     {
-        return $this->model::all($columns);
+        return $this->model::with($with)->get($columns);
     }
 
 
     /**
-     * @param $instituteId
-     * @param array $columns
-     * @return Collection|mixed
+     * @inheritDoc
      */
-    public function allByInstitute($instituteId, $columns = array('*')): Collection
+    public function allByInstitute($instituteId, $with = null, $columns = array('*')): Collection
     {
-        return $this->model::query()
-            ->with('standard')
-            ->where('institute_id', $instituteId)
-            ->get($columns);
+        $query = $this->model::query()->where('institute_id', $instituteId);
+        if ($with)
+            $query = $query->with($with);
+        return $query->get($columns);
     }
 
 
     /**
-     * @param int $perPage
-     * @param array $columns
-     * @return LengthAwarePaginator|mixed
+     * @inheritDoc
      */
-    public function paginate($perPage = 15, $columns = array('*')): LengthAwarePaginator
+    public function paginate($with = null, $perPage = 15, $columns = array('*')): LengthAwarePaginator
     {
-        return $this->model::query()
-            ->with('standard')
-            ->paginate($perPage, $columns);
+        $query = $this->model::query();
+        if($with)
+            $query = $query->with($with);
+        return $query->paginate($perPage, $columns);
     }
 
     /**
-     * @param $instituteId
-     * @param int $perPage
-     * @param array $columns
-     * @return LengthAwarePaginator|mixed
+     * @inheritDoc
      */
-    public function paginateByInstitute($instituteId, $perPage = 15, $columns = array('*')): LengthAwarePaginator
+    public function paginateByInstitute($instituteId, $with = null, $perPage = 15, $columns = array('*')): LengthAwarePaginator
     {
-        return $this->model::query()
-            ->where('institute_id', $instituteId)
-            ->with('standard')
-            ->paginate($perPage, $columns);
+        $query = $this->model::query()->where('institute_id', $instituteId);
+        if ($with)
+            $query = $query->with($with);
+        return $query->paginate($perPage, $columns);
     }
 
 
@@ -81,7 +75,8 @@ class CandidateEloquent implements ICandidateRepository
      */
     public function create(array $attributes): Candidate
     {
-        return $this->model::query()->create($attributes);
+        return $this->model::query()
+            ->create($attributes);
     }
 
     /**
@@ -91,7 +86,9 @@ class CandidateEloquent implements ICandidateRepository
      */
     public function update($id, array $attributes): bool
     {
-        return $this->model::query()->where('id', $id)->update($attributes);
+        return $this->model::query()
+            ->where('id', $id)
+            ->update($attributes);
     }
 
     /**
@@ -100,27 +97,37 @@ class CandidateEloquent implements ICandidateRepository
      */
     public function delete($id): bool
     {
-        return $this->model::query()->where('id', $id)->delete();
+        return $this->model::query()
+            ->where('id', $id)
+            ->delete();
     }
 
     /**
      * @param $id
+     * @param null $with
      * @param array $columns
      * @return Candidate|mixed
      */
-    public function find($id, $columns = array('*')): Candidate
+    public function find($id, $with = null, $columns = array('*')): Candidate
     {
-        return $this->model::query()->find($id, $columns);
+        $query = $this->model::query();
+        if ($with)
+            $query = $query->with($with);
+        return $query->find($id, $columns);
     }
 
     /**
      * @param $field
      * @param $value
+     * @param null $with
      * @param array $columns
      * @return Candidate|mixed
      */
-    public function findBy($field, $value, $columns = array('*')): Candidate
+    public function findBy($field, $value, $with = null, $columns = array('*')): Candidate
     {
-        return $this->model::query()->where($field, $value)->first($columns);
+        $query = $this->model::query()->where($field, $value);
+        if ($with)
+            $query = $query->with($with);
+        return $query->first($columns);
     }
 }

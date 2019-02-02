@@ -8,7 +8,7 @@
 @endpush
 
 @section('content')
-    <!-- Page Header -->
+
     <div class="page-header row no-gutters py-4">
         {{--<div class="col-12 col-md-4 text-center text-sm-left mb-4 mb-sm-0">--}}
         <div class="col-12 col-md-6 text-center text-md-left mb-4 mb-md-0">
@@ -25,9 +25,8 @@
             </div>
         </div>
     </div>
-    <!-- End Page Header -->
-    <!-- Transaction History Table -->
-    <table class="transaction-history d-none">
+
+    <table class="data-table users-table d-none">
         <thead>
         <tr>
             <th>Name</th>
@@ -70,12 +69,14 @@
         @endforelse
         </tbody>
     </table>
-    <!-- End Transaction History Table -->
+
 @endsection
 
 
 @push('js-body')
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
-    <script src="{{ asset('js/shards-pro/app/app-transaction-history.1.2.0.min.js') }}"></script>
+    <script>
+        $('.data-table').DataTable({responsive: !0});
+    </script>
 @endpush

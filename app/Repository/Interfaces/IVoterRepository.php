@@ -15,32 +15,36 @@ use Illuminate\Database\Eloquent\Collection;
 interface IVoterRepository
 {
     /**
+     * @param null $with
      * @param array $columns
      * @return Collection|mixed
      */
-    public function all($columns = array('*')) : Collection;
+    public function all($with = null, $columns = array('*')) : Collection;
 
     /**
      * @param $instituteId
+     * @param null $with
      * @param array $columns
      * @return Collection|mixed
      */
-    public function allByInstitute($instituteId, $columns = array('*')) : Collection;
+    public function allByInstitute($instituteId, $with = null, $columns = array('*')) : Collection;
 
     /**
+     * @param null $with
      * @param int $perPage
      * @param array $columns
      * @return LengthAwarePaginator|mixed
      */
-    public function paginate($perPage = 15, $columns = array('*')) : LengthAwarePaginator;
+    public function paginate($with = null, $perPage = 15, $columns = array('*')) : LengthAwarePaginator;
 
     /**
      * @param $instituteId
+     * @param null $with
      * @param int $perPage
      * @param array $columns
      * @return LengthAwarePaginator|mixed
      */
-    public function paginateByInstitute($instituteId, $perPage = 15, $columns = array('*')) : LengthAwarePaginator;
+    public function paginateByInstitute($instituteId, $with = null, $perPage = 15, $columns = array('*')) : LengthAwarePaginator;
 
     /**
      * @param array $attributes
@@ -63,16 +67,18 @@ interface IVoterRepository
 
     /**
      * @param $id
+     * @param null $with
      * @param array $columns
      * @return Voter|mixed
      */
-    public function find($id, $columns = array('*')) : Voter;
+    public function find($id, $with = null, $columns = array('*')) : Voter;
 
     /**
      * @param $field
      * @param $value
+     * @param null $with
      * @param array $columns
      * @return Voter|mixed
      */
-    public function findBy($field, $value, $columns = array('*')) : Voter;
+    public function findBy($field, $value, $with = null, $columns = array('*')) : Voter;
 }

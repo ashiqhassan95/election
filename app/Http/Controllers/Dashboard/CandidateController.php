@@ -10,8 +10,11 @@ use App\Repository\Interfaces\ICandidateRepository;
 use App\Repository\Interfaces\IElectionRepository;
 use App\Repository\Interfaces\IPositionRepository;
 use App\Repository\Interfaces\IStandardRepository;
+use App\Repository\Interfaces\IVoterRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CandidateController extends Controller
@@ -42,51 +45,58 @@ class CandidateController extends Controller
      * @var string
      */
     private $canidateImageDirectory = '/storage/images/candidates/';
+    /**
+     * @var IVoterRepository
+     */
+    private $voterRepository;
 
     public function __construct(ICandidateRepository $candidateRepository, IPositionRepository $positionRepository,
-                                IStandardRepository $standardRepository, IElectionRepository $electionRepository)
+                                IStandardRepository $standardRepository, IElectionRepository $electionRepository,
+                                IVoterRepository $voterRepository)
     {
         $this->middleware('auth')->except('show', 'index');
         $this->candidateRepository = $candidateRepository;
         $this->positionRepository = $positionRepository;
         $this->standardRepository = $standardRepository;
         $this->electionRepository = $electionRepository;
+        $this->voterRepository = $voterRepository;
     }
 
     public function index()
     {
-        $candidates = $this->candidateRepository->allByInstitute(SessionHelper::getInstitute());
+        $candidates = $this->candidateRepository->allByInstitute(SessionHelper::getInstitute(), ['voter', 'standard', 'position']);
         return view('dashboard.candidates.index', compact('candidates'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $voter = $this->voterRepository->find($request->get('voter_id'));
         $data = [
-            'positions' => $this->positionRepository->all(),
-            'standards' => $this->standardRepository->all(),
-            'elections' => $this->electionRepository->all(),
+            'voter' => $voter,
+            'positions' => $this->positionRepository->allByInstitute(SessionHelper::getInstitute()),
+            'elections' => $this->electionRepository->allByInstitute(SessionHelper::getInstitute()),
         ];
         return view('dashboard.candidates.create', $data);
     }
 
     public function store(Request $request)
     {
+        if (!$request->has('voter_id'))
+            return abort(404);
+
+        $voter = $this->voterRepository->find($request->get('voter_id'));
+        if (!$voter['institute_id'] == SessionHelper::getInstitute())
+            return abort(405);
+
         $this->validate($request, [
-            'name' => 'required|max:200',
-            'admission_number' => 'required',
-            'roll_number' => 'required',
-            'birth_date' => 'required',
-            'gender' => 'required|in:0,1',
+            'voter_id' => 'required',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:1024',
-            'standard_id' => 'required|exists:standards,id',
             'position_id' => 'required|exists:positions,id',
             'election_id' => 'required|exists:elections,id'
         ]);
 
-        $entry_data = $request->only([
-            'name', 'admission_number', 'roll_number', 'birth_date', 'gender',
-            'standard_id', 'position_id', 'election_id'
-        ]);
+        $entry_data = $request->only(['voter_id', 'position_id', 'election_id']);
+        $entry_data['standard_id'] = $voter['standard_id'];
 
         if ($request->hasFile('image')) {
             $image_file = $request->file('image');
@@ -97,9 +107,9 @@ class CandidateController extends Controller
 
         $entry_data = StoreHelper::AssignUserAndInstitute($entry_data);
 
-        $candidate = $this->candidateRepository->create($entry_data);
+        $this->candidateRepository->create($entry_data);
 
-        return redirect()->back()->with('message', __('dashboard-success.save', ['entity' => $this->className]));
+        return redirect()->route('dashboard.candidates.index');
     }
 
     public function show(Candidate $candidate)
@@ -109,11 +119,11 @@ class CandidateController extends Controller
 
     public function edit(Candidate $candidate)
     {
+        $candidate = $this->candidateRepository->find($candidate->getKey(), ['voter', 'standard']);
         $data = [
             'candidate' => $candidate,
-            'positions' => $this->positionRepository->all(),
-            'standards' => $this->standardRepository->all(),
-            'elections' => $this->electionRepository->all(),
+            'positions' => $this->positionRepository->allByInstitute(SessionHelper::getInstitute()),
+            'elections' => $this->electionRepository->allByInstitute(SessionHelper::getInstitute()),
         ];
         return view('dashboard.candidates.edit', $data);
     }
@@ -121,21 +131,23 @@ class CandidateController extends Controller
     public function update(Request $request, Candidate $candidate)
     {
         $this->validate($request, [
-            'name' => 'required|max:200',
-            'admission_number' => 'required',
-            'roll_number' => 'required',
-            'birth_date' => 'required',
-            'gender' => 'required',
-            'standard_id' => 'required|exists:standards,id',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:1024',
             'position_id' => 'required|exists:positions,id',
             'election_id' => 'required|exists:elections,id'
         ]);
 
-        $this->candidateRepository->update($candidate->getKey(), $request->only([
-            'name', 'admission_number', 'roll_number', 'birth_date', 'gender',
-            'standard_id', 'position_id', 'election_id'
-        ]));
+        $entry_data = $request->only(['position_id', 'election_id']);
 
+        if ($request->hasFile('image')) {
+            $image_file = $request->file('image');
+            $image_name = sprintf('%s.%s', time(), $image_file->getClientOriginalExtension());
+            $image_file->move(public_path($this->canidateImageDirectory), $image_name);
+            $entry_data['image'] = $this->canidateImageDirectory . $image_name;
+            if(File::exists(public_path($candidate['image']))) {
+                File::delete(public_path($candidate['image']));
+            }
+        }
+        $this->candidateRepository->update($candidate->getKey(), $entry_data);
         return redirect()->back()->with('message', __('dashboard-success.update', ['entity' => $this->className]));
     }
 
