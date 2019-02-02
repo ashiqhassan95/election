@@ -59236,17 +59236,6 @@ if (document.getElementById('example')) {
 
 /***/ }),
 
-/***/ "./resources/sass/shards/shards-ui/shards.scss":
-/*!*****************************************************!*\
-  !*** ./resources/sass/shards/shards-ui/shards.scss ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ "./resources/sass/site.scss":
 /*!**********************************!*\
   !*** ./resources/sass/site.scss ***!
@@ -59259,16 +59248,15 @@ if (document.getElementById('example')) {
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/site.scss ./resources/sass/shards/shards-ui/shards.scss ***!
-  \**************************************************************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/site.scss ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\laragon\www\election\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! C:\laragon\www\election\resources\sass\app.scss */"./resources/sass/app.scss");
-__webpack_require__(/*! C:\laragon\www\election\resources\sass\site.scss */"./resources/sass/site.scss");
-module.exports = __webpack_require__(/*! C:\laragon\www\election\resources\sass\shards\shards-ui\shards.scss */"./resources/sass/shards/shards-ui/shards.scss");
+module.exports = __webpack_require__(/*! C:\laragon\www\election\resources\sass\site.scss */"./resources/sass/site.scss");
 
 
 /***/ })

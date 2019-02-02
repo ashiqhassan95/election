@@ -31,7 +31,6 @@
             <th>Gender</th>
             <th>Date of Birth</th>
             <th>Created on</th>
-            {{--<th>Updated on</th>--}}
             <th>Actions</th>
         </tr>
         </thead>
@@ -39,14 +38,14 @@
         @forelse($candidates as $candidate)
             <tr>
                 <td>
-                    <a href="{{ route('dashboard.candidates.show', $candidate->id) }}">{{ $candidate->name }}</a>
+                    <a href="{{ route('dashboard.candidates.show', $candidate->id) }}">{{ $candidate->voter->name }}</a>
                 </td>
-                <td>{{ $candidate->admission_number }}</td>
-                <td>{{ $candidate->roll_number }}</td>
+                <td>{{ $candidate->voter->admission_number }}</td>
+                <td>{{ $candidate->voter->roll_number }}</td>
                 <td>{{ $candidate->position->title }}</td>
                 <td>{{ $candidate->standard->name }}</td>
-                <td>{{ $candidate->gender() }}</td>
-                <td>{{ $candidate->birth_date }}</td>
+                <td>{{ $candidate->voter->gender() }}</td>
+                <td>{{ $candidate->voter->birth_date }}</td>
                 {{--<td>{{ date('d-m-Y', strtotime($candidate->birth_date))  }}</td>--}}
                 <td>{{ date('d-m-Y', strtotime($candidate->created_at)) }}</td>
                 {{--<td>{{ date('d-m-Y', strtotime($candidate->updated_at)) }}</td>--}}

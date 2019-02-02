@@ -14,7 +14,7 @@ class Voter extends Model
         'uid', 'standard_id', 'institute_id', 'user_id'
     ];
 
-    protected $with = ['user', 'standard'];
+    //protected $with = ['user', 'standard'];
 
     public function user()
     {

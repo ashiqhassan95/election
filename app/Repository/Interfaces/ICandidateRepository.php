@@ -15,64 +15,70 @@ use Illuminate\Database\Eloquent\Collection;
 interface ICandidateRepository
 {
     /**
+     * @param null $with
      * @param array $columns
      * @return Collection|mixed
      */
-    public function all($columns = array('*')) : Collection;
+    public function all($with = null, $columns = array('*')): Collection;
 
     /**
      * @param $instituteId
      * @param array $columns
+     * @param null $with
      * @return Collection|mixed
      */
-    public function allByInstitute($instituteId, $columns = array('*')) : Collection;
+    public function allByInstitute($instituteId, $with = null, $columns = array('*')): Collection;
 
     /**
+     * @param null $with
      * @param int $perPage
      * @param array $columns
      * @return LengthAwarePaginator|mixed
      */
-    public function paginate($perPage = 15, $columns = array('*')) : LengthAwarePaginator;
+    public function paginate($with = null, $perPage = 15, $columns = array('*')): LengthAwarePaginator;
 
     /**
      * @param $instituteId
+     * @param null $with
      * @param int $perPage
      * @param array $columns
      * @return LengthAwarePaginator|mixed
      */
-    public function paginateByInstitute($instituteId, $perPage = 15, $columns = array('*')) : LengthAwarePaginator;
+    public function paginateByInstitute($instituteId, $with = null, $perPage = 15, $columns = array('*')): LengthAwarePaginator;
 
     /**
      * @param array $attributes
      * @return Candidate|mixed
      */
-    public function create(array $attributes) : Candidate;
+    public function create(array $attributes): Candidate;
 
     /**
      * @param $id
      * @param array $attributes
      * @return bool|mixed
      */
-    public function update($id, array $attributes) : bool ;
+    public function update($id, array $attributes): bool;
 
     /**
      * @param $id
      * @return bool|mixed
      */
-    public function delete($id) : bool ;
+    public function delete($id): bool;
 
     /**
      * @param $id
+     * @param null $with
      * @param array $columns
      * @return Candidate|mixed
      */
-    public function find($id, $columns = array('*')) : Candidate;
+    public function find($id, $with = null, $columns = array('*')): Candidate;
 
     /**
      * @param $field
      * @param $value
+     * @param null $with
      * @param array $columns
      * @return Candidate|mixed
      */
-    public function findBy($field, $value, $columns = array('*')) : Candidate;
+    public function findBy($field, $value, $with = null, $columns = array('*')): Candidate;
 }

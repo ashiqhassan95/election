@@ -18,147 +18,106 @@
 
     <!-- End Page Header -->
     <div class="row">
-        <div class="col-lg-6 col-md">
+        <div class="col-lg-7 col-md">
             <!-- Add New Position Form -->
             <div class="card card-small mb-3">
                 <div class="card-body">
                     <form action="{{ route('dashboard.candidates.store') }}" method="post"
                           enctype="multipart/form-data">
                         @csrf
-
-                        <div class="form-group">
-                            <label for="nameInput">Name</label>
-                            <input type="text" id="nameInput" class="form-control" value="{{ $voter->name }}" readonly>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="imageInput">Image</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" id="imageInput" name="image"
-                                           class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }} custom-file-input">
-                                    <label class="custom-file-label" for="imageInput">Choose
-                                        file...</label>
-                                </div>
-                                <div class="input input-group-append">
-                                    <button class="btn btn-warning ml-1 js-clear-image-btn" href="#">Clear</button>
-                                </div>
-
-                            </div>
-                            <div class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }} d-none"></div>
-                            @foreach($errors->get('image') as $error)
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $error }}</strong>
-                                </span>
-                            @endforeach
-                        </div>
-
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="admissionInput">Admission number</label>
-                                    <input class="form-control" type="text" id="admissionInput"
-                                           value="{{ $voter->admission_number }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="rollInput">Roll number</label>
-                                    <input class="form-control" type="text" id="rollInput"
-                                           value="{{ $voter->roll_number }}" readonly>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="col">
-                                <label for="gender">Gender</label>
-                                <div class="form-group">
-                                    <div class="custom-control custom-radio d-inline mr-3">
-                                        <input type="radio" id="maleRadioInput"
-                                               {{ $voter->gender == 0 ? 'checked' : '' }} value="0"
-                                               class="form-control custom-control-input" readonly>
-                                        <label class="custom-control-label" for="maleRadioInput">Male</label>
-                                    </div>
-                                    <div class="custom-control custom-radio d-inline">
-                                        <input type="radio" id="femaleRadioInput"
-                                               {{ $voter->gender == 1 ? 'checked' : '' }} value="1"
-                                               class="form-control custom-control-input">
-                                        <label class="custom-control-label" for="femaleRadioInput">Female</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="birthDate">Date of birth</label>
+                        <input type="hidden" name="voter_id" value="{{ $voter->id }}">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                            <tr>
+                                <td class="w-30">Name</td>
+                                <td>{{ $voter->name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-30">Gender</td>
+                                <td>{{ $voter->gender() }}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-30">Date of Birth</td>
+                                <td>{{ $voter->birth_date }}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-30">Admission Number</td>
+                                <td>{{ $voter->admission_number }}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-30">Roll Number</td>
+                                <td>{{ $voter->roll_number }}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-30">Class</td>
+                                <td>{{ $voter->standard->name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="w-30">
+                                    <label for="imageInput" class="mb-0">Image</label>
+                                </td>
+                                <td>
                                     <div class="input-group">
-                                        <input class="form-control"
-                                               type="text" name="birth_date" id="birthDate"
-                                               value="{{ $voter->birth_date }}" data-provide="datepicker"
-                                               autocomplete="off" data-date-format="yyyy-mm-dd">
-                                        <span class="input-group-append">
-                                            <span class="input-group-text">
-                                                <i class="material-icons">&#xE916;</i>
-                                            </span>
-                                        </span>
+                                        <div class="custom-file">
+                                            <input type="file" id="imageInput" name="image"
+                                                   class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }} custom-file-input">
+                                            <label class="custom-file-label overflow-hidden" for="imageInput">Choose
+                                                file...</label>
+                                        </div>
+                                        <div class="input input-group-append">
+                                            <button class="btn btn-warning ml-1 js-clear-image-btn" href="#">Clear
+                                            </button>
+                                        </div>
+
                                     </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="classSelect">Select a class</label>
-                            <select class="form-control{{ $errors->has('standard_id') ? ' is-invalid' : '' }}"
-                                    name="standard_id" id="classSelect" readonly>
-                                @foreach($standards as $standard)
-                                    <option value="{{ $standard->id }}" {{ old('standard_id') == $standard->id ? 'selected': '' }}>
-                                        {{ $standard->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @foreach($errors->get('standard_id') as $error)
-                                <span class="invalid-feedback" role="alert">
+                                    <div class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }} d-none"></div>
+                                    @foreach($errors->get('image') as $error)
+                                        <span class="invalid-feedback" role="alert">
                                     <strong>{{ $error }}</strong>
                                 </span>
-                            @endforeach
-                        </div>
-
-                        <div class="form-group">
-                            <label for="electionSelect">Select a election</label>
-                            <select class="form-control{{ $errors->has('election_id') ? ' is-invalid' : '' }}"
-                                    name="election_id" id="electionSelect">
-                                @foreach($elections as $election)
-                                    <option value="{{ $election->id }}" {{ old('election_id') == $election->id ? 'selected': '' }}>
-                                        {{ $election->title }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @foreach($errors->get('election_id') as $error)
-                                <span class="invalid-feedback" role="alert">
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-30 border-right">
+                                    <label for="electionSelect" class="mb-0">Select election</label>
+                                </td>
+                                <td>
+                                    <select class="form-control{{ $errors->has('election_id') ? ' is-invalid' : '' }}"
+                                            name="election_id" id="electionSelect">
+                                        @foreach($elections as $election)
+                                            <option value="{{ $election->id }}" {{ old('election_id') == $election->id ? 'selected': '' }}>
+                                                {{ $election->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @foreach($errors->get('election_id') as $error)
+                                        <span class="invalid-feedback" role="alert"><strong>{{ $error }}</strong></span>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-30 border-right">
+                                    <label for="positionSelect" class="mb-0">Select position</label>
+                                </td>
+                                <td>
+                                    <select class="form-control{{ $errors->has('position_id') ? ' is-invalid' : '' }}"
+                                            name="position_id" id="positionSelect">
+                                        @foreach($positions as $position)
+                                            <option value="{{ $position->id }}" {{ old('position_id') == $position->id ? 'selected': '' }}>
+                                                {{ $position->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @foreach($errors->get('position_id') as $error)
+                                        <span class="invalid-feedback" role="alert">
                                     <strong>{{ $error }}</strong>
                                 </span>
-                            @endforeach
-                        </div>
-
-                        <div class="form-group">
-                            <label for="positionSelect">Select a position</label>
-                            <select class="form-control{{ $errors->has('position_id') ? ' is-invalid' : '' }}"
-                                    name="position_id" id="positionSelect">
-                                @foreach($positions as $position)
-                                    <option value="{{ $position->id }}" {{ old('position_id') == $position->id ? 'selected': '' }}>
-                                        {{ $position->title }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @foreach($errors->get('position_id') as $error)
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $error }}</strong>
-                                </span>
-                            @endforeach
-                        </div>
-
+                                    @endforeach
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                         <button class="btn btn-primary">Submit</button>
                     </form>
                 </div>
@@ -167,42 +126,3 @@
         </div>
     </div>
 @endsection
-
-@push('js-body')
-    <script type="text/javascript">
-        var inputs = document.querySelectorAll('.custom-file-input');
-        Array.prototype.forEach.call(inputs, function (input) {
-            var label = input.nextElementSibling;
-            var labelVal = label.innerHTML;
-
-            input.addEventListener('change', function (e) {
-                var fileName = '';
-                if (this.files && this.files.length > 1)
-                    fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
-                else
-                    fileName = e.target.value.split('\\').pop();
-
-                if (fileName) {
-                    label.innerHTML = fileName;
-                }
-                else {
-                    label.innerHTML = labelVal;
-                }
-            });
-        });
-
-        var clearImageButton = document.querySelector('.js-clear-image-btn');
-        clearImageButton.addEventListener('click', function (e) {
-            e.preventDefault();
-            let imageInput = document.getElementById('imageInput'),
-                label = imageInput.nextElementSibling;
-            imageInput.value = '';
-            label.innerHTML = 'Choose file...';
-        });
-        // $(document).ready(function() {
-        //     $('.js-clear-image-btn').on('click', function(){
-        //         $('#imageInput').val('');
-        //     });
-        // });
-    </script>
-@endpush
