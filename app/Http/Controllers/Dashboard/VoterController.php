@@ -38,7 +38,7 @@ class VoterController extends Controller
 
     public function index()
     {
-        $voters = $this->voterRepository->allByInstitute(SessionHelper::getInstitute());
+        $voters = $this->voterRepository->allByInstitute(SessionHelper::getInstitute(), ['standard']);
         return view('dashboard.voters.index', compact('voters'));
     }
 
