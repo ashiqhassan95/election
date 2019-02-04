@@ -23,11 +23,6 @@ Route::get('/debug', function () {
     return view('dashboard.layouts.master');
 });
 
-Route::get('/shards/{pageName}', function ($pageName) {
-//    return $pageName;
-    return view('shards.' . $pageName);
-});
-
 Route::get('/dashboard/users/invite', 'InviteController@invite')->name('invite.show');
 Route::post('/dashboard/users/invite', 'InviteController@process')->name('invite.process');
 Route::get('/invite/{token}', 'InviteController@accept')->name('invite.accept');
@@ -44,6 +39,8 @@ Route::post('/dashboard/voters/import/{format}', 'Dashboard\VoterController@impo
 Route::post('/dashboard/candidates/import/{format}', 'Dashboard\CandidateController@import')->name('dashboard.candidates.import');
 Route::get('/dashboard/elections/{election}/launch', 'Dashboard\ElectionController@launch')->name('dashboard.elections.launch');
 Route::post('/dashboard/elections/launch', 'Dashboard\ElectionController@launchElection')->name('dashboard.elections.launch.push');
+Route::get('/election/{slug}', 'FrontEnd\ElectionController@vote')->name('election.vote');
+Route::post('/election/{slug}', 'FrontEnd\ElectionController@voterLogin')->name('election.vote.login');
 
 Route::prefix('dashboard')->namespace('Dashboard')
     ->name('dashboard.')

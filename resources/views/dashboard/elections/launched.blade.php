@@ -40,7 +40,7 @@
                         </tr>
                         <tr>
                             <td><strong>Election URL</strong></td>
-                            <td>{{ $election->url }}</td>
+                            <td><a href="{{ route('election.vote',  $election->slug) }}">{{ route('election.vote',  $election->slug) }}</a></td>
                         </tr>
                         </tbody>
                     </table>

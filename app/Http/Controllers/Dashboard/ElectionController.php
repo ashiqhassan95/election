@@ -92,7 +92,7 @@ class ElectionController extends Controller
 
     public function launch(Election $election)
     {
-        if(is_null($election->url))
+        if(is_null($election->slug))
             return view('dashboard.elections.launch', compact('election'));
         else
             return view('dashboard.elections.launched', compact('election'));
@@ -101,16 +101,15 @@ class ElectionController extends Controller
     public function launchElection(Request $request)
     {
         $election = $this->electionRepository->find($request->get('election_id'));
-        if(Is_null($election->url)){
-            $uid =  Str::random(10);
-            $url = "election/" . $uid;
+        if(Is_null($election->slug)){
+            $slug =  Str::random(10);
 
-            while(Election::query()->where('url', $url)->exists()) {
-                $uid =  Str::uuid();
-                $url = "election/" . $uid->toString();
+            while(Election::query()->where('slug', $slug)->exists()) {
+                $slug =  Str::uuid();
+                $slug = $slug->toString();
             }
 
-            $this->electionRepository->update($election->getKey(), ['url'=> $url]);
+            $this->electionRepository->update($election->getKey(), ['slug'=> $slug]);
 
             $election = $this->electionRepository->find($election->getKey());
         }
