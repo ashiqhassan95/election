@@ -23,6 +23,7 @@
     <table class="data-table candidates-table d-none">
         <thead>
         <tr>
+            <th>Image</th>
             <th>Name</th>
             <th>Admission #</th>
             <th>Roll #</th>
@@ -37,6 +38,11 @@
         <tbody>
         @forelse($candidates as $candidate)
             <tr>
+                <td>
+                    <div>
+                        <img class="card-post__author-avatar" src="{{ $candidate->image }}" alt="">
+                    </div>
+                </td>
                 <td>
                     <a href="{{ route('dashboard.candidates.show', $candidate->id) }}">{{ $candidate->voter->name }}</a>
                 </td>

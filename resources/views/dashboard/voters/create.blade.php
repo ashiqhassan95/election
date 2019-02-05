@@ -24,10 +24,16 @@
                 <div class="card-body">
                     <form action="{{ route('dashboard.voters.store') }}" method="post">
                         @csrf
+                        @if(env('APP_DEBUG') == true)
+                            <div class="form-group">
+                                <button class="btn btn-danger demo-data-btn">Push Demo Data</button>
+                            </div>
+                        @endif
                         <div class="form-group">
                             <label for="nameInput">Full name</label>
                             <input class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" type="text"
-                                   name="name" id="nameInput" value="{{ old('name') }}" placeholder="First and last name">
+                                   name="name" id="nameInput" value="{{ old('name') }}"
+                                   placeholder="First and last name">
 
                             @foreach($errors->get('name') as $error)
                                 <span class="invalid-feedback" role="alert">
@@ -111,7 +117,6 @@
                                             </span>
                                         @endforeach
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -154,10 +159,26 @@
     </div>
 @endsection
 
-{{--@push('js-body')--}}
-{{--<script>--}}
-{{--$('#birthDate').datepicker({--}}
-{{--format: 'yyyy-mm-dd',--}}
-{{--});--}}
-{{--</script>--}}
-{{--@endpush--}}
+@push('js-body')
+    @if(env('APP_DEBUG') == true)
+        <script src="{{ asset('js/chance.js') }}"></script>
+        <script>
+            $('.demo-data-btn').click(function (e) {
+                e.preventDefault();
+                let gender = chance.gender();
+                $('#nameInput').val(chance.name({gender: gender, nationality: 'en'}));
+                $('#admissionInput').val(chance.integer({min: 1111, max: 2222}));
+                $('#rollInput').val(chance.integer({min: 1, max: 70}));
+                $('#standardSelect').val(chance.integer({min: 1, max: $('#standardSelect option').length}));
+                if (gender === 'Male')
+                    $('#maleRadioInput').prop('checked', true);
+                else if (gender === 'Female')
+                    $('#femaleRadioInput').prop('checked', true);
+                let year = chance.integer({min: 1980, max: 2002}),
+                    month = chance.integer({min: 1, max: 12}),
+                    day = chance.integer({min: 1, max: 27});
+                $('#birthDate').val(year + '-' + month + '-' + day);
+            });
+        </script>
+    @endif
+@endpush

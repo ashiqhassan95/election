@@ -20,7 +20,7 @@ class CreateElectionsTable extends Migration
             $table->dateTime('poll_start_at')->nullable();
             $table->dateTime('poll_end_at')->nullable();
             $table->tinyInteger('type')->nullable();
-            $table->string('url')->nullable();
+            $table->string('slug')->nullable();
             $table->unsignedInteger('institute_id');
             $table->unsignedInteger('user_id')->nullable();
 
