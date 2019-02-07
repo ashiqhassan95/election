@@ -37,36 +37,36 @@
                             @endforeach
                         </div>
 
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="pollStartDateTime">Poll start date time</label>
-                                    <input class="form-control flatpickr-input{{ $errors->has('poll_start_at') ? ' is-invalid' : '' }}"
-                                           type="datetime-local" name="poll_start_at"
-                                           id="pollStartDateTime" data-input="true" placeholder="select date and time"
-                                           value="{{ old('poll_start_at') }}">
-                                    @foreach($errors->get('poll_start_at') as $error)
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $error }}</strong>
-                                        </span>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="pollEndDateTime">Poll end date time</label>
-                                    <input class="form-control flatpickr-input{{ $errors->has('poll_end_at') ? ' is-invalid' : '' }}"
-                                           type="datetime-local" name="poll_end_at"
-                                           id="pollEndDateTime" data-input placeholder="select date and time"
-                                           value="{{ old('poll_end_at') }}">
-                                    @foreach($errors->get('poll_end_at') as $error)
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $error }}</strong>
-                                        </span>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="form-row">--}}
+                            {{--<div class="col">--}}
+                                {{--<div class="form-group">--}}
+                                    {{--<label for="pollStartDateTime">Poll start date time</label>--}}
+                                    {{--<input class="form-control flatpickr-input{{ $errors->has('poll_start_at') ? ' is-invalid' : '' }}"--}}
+                                           {{--type="datetime-local" name="poll_start_at"--}}
+                                           {{--id="pollStartDateTime" data-input="true" placeholder="select date and time"--}}
+                                           {{--value="{{ old('poll_start_at') }}">--}}
+                                    {{--@foreach($errors->get('poll_start_at') as $error)--}}
+                                        {{--<span class="invalid-feedback" role="alert">--}}
+                                            {{--<strong>{{ $error }}</strong>--}}
+                                        {{--</span>--}}
+                                    {{--@endforeach--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col">--}}
+                                {{--<div class="form-group">--}}
+                                    {{--<label for="pollEndDateTime">Poll end date time</label>--}}
+                                    {{--<input class="form-control flatpickr-input{{ $errors->has('poll_end_at') ? ' is-invalid' : '' }}"--}}
+                                           {{--type="datetime-local" name="poll_end_at"--}}
+                                           {{--id="pollEndDateTime" data-input placeholder="select date and time"--}}
+                                           {{--value="{{ old('poll_end_at') }}">--}}
+                                    {{--@foreach($errors->get('poll_end_at') as $error)--}}
+                                        {{--<span class="invalid-feedback" role="alert">--}}
+                                            {{--<strong>{{ $error }}</strong>--}}
+                                        {{--</span>--}}
+                                    {{--@endforeach--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
                         <div class="form-group">
                             <label for="type">Please select election type</label>
@@ -75,7 +75,7 @@
                                 <option value="1">Parliamentary</option>
                             </select>
                         </div>
-                        <button class="btn btn-primary">Submit</button>
+                        <button class="btn btn-primary"><i class="material-icons mr-1">save</i>Save</button>
                     </form>
                 </div>
             </div>

@@ -10,8 +10,12 @@ class Election extends Model
     protected $table = 'elections';
 
     protected $fillable = [
-        'title', 'poll_start_at', 'poll_end_at',
+        'title', 'poll_start_at', 'poll_end_at', 'status',
         'type', 'url', 'institute_id', 'user_id'
+    ];
+
+    protected $dates = [
+        'poll_start_at', 'poll_end_at',
     ];
 
     public function user()

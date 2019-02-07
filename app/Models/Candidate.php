@@ -10,7 +10,8 @@ class Candidate extends Model
     protected $table = 'candidates';
 
     protected $fillable = [
-        'voter_id', 'image', 'standard_id', 'position_id', 'election_id', 'institute_id', 'user_id'
+        'voter_id', 'image', 'is_active', 'standard_id',
+        'position_id', 'election_id', 'institute_id', 'user_id'
     ];
 
     //protected $with = ['user', 'standard', 'position', 'voter'];

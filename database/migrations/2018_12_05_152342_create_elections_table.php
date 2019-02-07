@@ -21,6 +21,7 @@ class CreateElectionsTable extends Migration
             $table->dateTime('poll_end_at')->nullable();
             $table->tinyInteger('type')->nullable();
             $table->string('slug')->nullable();
+            $table->tinyInteger('status')->nullable();
             $table->unsignedInteger('institute_id');
             $table->unsignedInteger('user_id')->nullable();
 

@@ -150,7 +150,7 @@
                                 </span>
                             @endforeach
                         </div>
-                        <button class="btn btn-primary">Submit</button>
+                        <button class="btn btn-primary"><i class="material-icons mr-1">save</i>Save</button>
                     </form>
                 </div>
             </div>

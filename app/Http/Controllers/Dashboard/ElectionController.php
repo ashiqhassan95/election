@@ -53,6 +53,7 @@ class ElectionController extends Controller
 
         $entry_data = $request->only(['title', 'poll_start_at', 'poll_end_at', 'type']);
         $entry_data = StoreHelper::AssignUserAndInstitute($entry_data);
+        $entry_data['status'] = '0';
         $this->electionRepository->create($entry_data);
 
         return redirect()->back()->with('message', __('dashboard-success.save', ['entity' => $this->className]));
@@ -109,7 +110,10 @@ class ElectionController extends Controller
                 $slug = $slug->toString();
             }
 
-            $this->electionRepository->update($election->getKey(), ['slug'=> $slug]);
+            $this->electionRepository->update($election->getKey(), [
+                'slug'=> $slug,
+                'status' => '1'
+            ]);
 
             $election = $this->electionRepository->find($election->getKey());
         }
