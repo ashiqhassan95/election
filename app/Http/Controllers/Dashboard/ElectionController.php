@@ -117,4 +117,13 @@ class ElectionController extends Controller
         return view('dashboard.elections.launched', compact('election'));
     }
 
+    public function completeElection(Election $election, Request $request)
+    {
+        $this->electionRepository->update($election->getKey(),[
+            'poll_end_at' => now(),
+            'status' => 2
+        ]);
+        return redirect()->back();
+    }
+
 }
