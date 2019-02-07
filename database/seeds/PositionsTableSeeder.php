@@ -24,7 +24,7 @@ class PositionsTableSeeder extends Seeder
     {
         DB::table('positions')->insert([
             'title' => $title,
-            'user_id' => '1',
+            'user_id' => '3',
             'institute_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),

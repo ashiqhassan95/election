@@ -38,5 +38,15 @@ class Election extends Model
             return 'Unknown';
     }
 
+    public function getStatus()
+    {
+        if($this['status'] == 0)
+            return 'Building';
+        else if($this['status'] == 1)
+            return 'Running';
+        else if($this['status'] == 2)
+            return 'Completed';
+    }
+
 
 }

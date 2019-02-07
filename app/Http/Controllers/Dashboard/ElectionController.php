@@ -46,12 +46,10 @@ class ElectionController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|max:200',
-            'poll_start_at' => 'required',
-            'poll_end_at' => 'required',
             'type' => 'required|in:0,1'
         ]);
 
-        $entry_data = $request->only(['title', 'poll_start_at', 'poll_end_at', 'type']);
+        $entry_data = $request->only(['title', 'type']);
         $entry_data = StoreHelper::AssignUserAndInstitute($entry_data);
         $entry_data['status'] = '0';
         $this->electionRepository->create($entry_data);
@@ -73,13 +71,11 @@ class ElectionController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|max:200',
-            'poll_start_at' => 'required',
-            'poll_end_at' => 'required',
             'type' => 'required|in:0,1'
         ]);
 
         $this->electionRepository->update($election->getKey(), $request->only([
-            'title', 'poll_start_at', 'poll_end_at', 'type'
+            'title', 'type'
         ]));
 
         return redirect()->back()->with('message', __('dashboard-success.update', ['entity' => $this->className]));
@@ -112,6 +108,7 @@ class ElectionController extends Controller
 
             $this->electionRepository->update($election->getKey(), [
                 'slug'=> $slug,
+                'poll_start_at' => now(),
                 'status' => '1'
             ]);
 

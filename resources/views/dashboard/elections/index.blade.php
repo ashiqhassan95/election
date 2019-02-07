@@ -25,6 +25,7 @@
             <th>Poll start at</th>
             <th>Poll end at</th>
             <th>Type</th>
+            <th>Status</th>
             <th>Created on</th>
             <th>Updated on</th>
             <th>Actions</th>
@@ -37,6 +38,7 @@
                 <td>{{ $election->poll_start_at }}</td>
                 <td>{{ $election->poll_end_at }}</td>
                 <td>{{ $election->getType() }}</td>
+                <td>{{ $election->getStatus() }}</td>
                 <td>{{ date('d-m-Y', strtotime($election->created_at)) }}</td>
                 <td>{{ date('d-m-Y', strtotime($election->updated_at)) }}</td>
                 <td>
