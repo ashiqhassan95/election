@@ -73,12 +73,11 @@ class ElectionController extends Controller
     }
 
     public function getCandidatesForPresidential($electionId)
-    {
+    {  
         $candidatesCollection = new Collection();
         $positionIds = Candidate::query()
-            ->select('position_id')
-            ->where('election_id', $electionId)
             ->distinct()
+            ->where('election_id', $electionId)
             ->pluck('position_id');
 
         foreach ($positionIds as $positionId)
