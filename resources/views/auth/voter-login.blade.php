@@ -24,46 +24,47 @@
                                          src="/images/shards/shards-dashboards-logo.svg"
                                          alt="Shards Dashboards - Register Template">
                                     <h4 class="auth-form__title text-center mb-4">{{ $institute->name }}</h4>
-                                    <form action="{{ route('election.vote.login', $election->slug) }}" method="post">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="uidInput">Email UID</label>
-                                            <input type="text" name="uid"
-                                                   class="form-control{{ $errors->has('uid') ? ' is-invalid' : '' }}"
-                                                   id="uidInput"
-                                                   value="{{ old('uid') }}"
-                                                   placeholder="Enter Unique Identification Number" autofocus>
+                                    <form action="/election/{{ $election['slug'] }}" method="post">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="uidInput">Email UID</label>
+                                        <input type="text" name="uid"
+                                               class="form-control{{ $errors->has('uid') ? ' is-invalid' : '' }}"
+                                               id="uidInput"
+                                               value="{{ old('uid') }}"
+                                               placeholder="Enter Unique Identification Number" autofocus>
 
-                                            @foreach ($errors->get('uid') as $error)
-                                                <span class="invalid-feedback" role="alert">
+                                        @foreach ($errors->get('uid') as $error)
+                                            <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $error }}</strong>
                                                 </span>
-                                            @endforeach
-                                        </div>
+                                        @endforeach
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="birthDate">Date of birth</label>
-                                            <div class="input-group">
-                                                <input class="form-control{{ $errors->has('birth_date') ? ' is-invalid' : '' }}"
-                                                       type="text" name="birth_date" id="birthDate"
-                                                       value="{{ old('birth_date') }}" data-provide="datepicker"
-                                                       autocomplete="off" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd">
-                                                <span class="input-group-append">
+                                    <div class="form-group">
+                                        <label for="birthDate">Date of birth</label>
+                                        <div class="input-group">
+                                            <input class="form-control{{ $errors->has('birth_date') ? ' is-invalid' : '' }}"
+                                                   type="text" name="birth_date" id="birthDate"
+                                                   value="{{ old('birth_date') }}" data-provide="datepicker"
+                                                   autocomplete="off" placeholder="YYYY-MM-DD"
+                                                   data-date-format="yyyy-mm-dd">
+                                            <span class="input-group-append">
                                             <span class="input-group-text">
                                               <i class="material-icons">&#xE916;</i>
                                             </span>
                                         </span>
-                                                @foreach($errors->get('birth_date') as $error)
-                                                    <span class="invalid-feedback" role="alert">
+                                            @foreach($errors->get('birth_date') as $error)
+                                                <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $error }}</strong>
                                             </span>
-                                                @endforeach
-                                            </div>
+                                            @endforeach
                                         </div>
+                                    </div>
 
 
-                                        <button type="submit" class="btn btn-pill btn-accent d-table mx-auto">Login
-                                        </button>
+                                    <button type="submit" class="btn btn-pill btn-accent d-table mx-auto">Login
+                                    </button>
                                     </form>
                                 </div>
                             </div>

@@ -30,22 +30,24 @@ class Election extends Model
 
     public function getType()
     {
-        if($this['type'] == 0)
-            return 'Presidential';
-        else if($this['type'] == 1)
-            return 'Parliamentary';
-        else
-            return 'Unknown';
+        switch ($this['type']) {
+            case 0 :
+                return 'Presidential';
+            case 1 :
+                return 'Parliamentary';
+        }
     }
 
     public function getStatus()
     {
-        if($this['status'] == 0)
-            return 'Building';
-        else if($this['status'] == 1)
-            return 'Running';
-        else if($this['status'] == 2)
-            return 'Completed';
+        switch ($this['status']) {
+            case 0 :
+                return 'Building';
+            case 1 :
+                return 'Running';
+            case  2:
+                return 'Completed';
+        }
     }
 
 

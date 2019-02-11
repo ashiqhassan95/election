@@ -95,10 +95,9 @@ class ElectionController extends Controller
             return view('dashboard.elections.launched', compact('election'));
     }
 
-    public function launchElection(Request $request)
+    public function launchElection(Request $request, Election $election)
     {
-        $election = $this->electionRepository->find($request->get('election_id'));
-        if(Is_null($election->slug)){
+        if($election['status'] == 0){
             $slug =  Str::random(10);
 
             while(Election::query()->where('slug', $slug)->exists()) {
@@ -111,13 +110,11 @@ class ElectionController extends Controller
                 'poll_start_at' => now(),
                 'status' => '1'
             ]);
-
-            $election = $this->electionRepository->find($election->getKey());
         }
-        return view('dashboard.elections.launched', compact('election'));
+        return redirect()->back();//->with('election', $election);
     }
 
-    public function completeElection(Election $election, Request $request)
+    public function completeElection(Request $request, Election $election)
     {
         $this->electionRepository->update($election->getKey(),[
             'poll_end_at' => now(),
