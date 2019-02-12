@@ -23,24 +23,56 @@ Route::get('/debug', function () {
     return view('dashboard.layouts.master');
 });
 
+/**
+ * Generate a CSV of all the routes
+ */
+Route::get('/debug/r', function()
+{
+    header('Content-Type: application/excel');
+    header('Content-Disposition: attachment; filename="routes.csv"');
+
+    $routes = Route::getRoutes();
+    $fp = fopen('php://output', 'w');
+    fputcsv($fp, ['METHOD', 'URI', 'NAME', 'ACTION']);
+    foreach ($routes as $route) {
+        fputcsv($fp, [head($route->methods()) , $route->uri(), $route->getName(), $route->getActionName()]);
+    }
+    fclose($fp);
+});
+
 Route::get('/dashboard/users/invite', 'InviteController@invite')->name('invite.show');
 Route::post('/dashboard/users/invite', 'InviteController@process')->name('invite.process');
 Route::get('/invite/{token}', 'InviteController@accept')->name('invite.accept');
 Route::post('/invite', 'InviteController@register')->name('invite.register');
 
-Route::get('/dashboard/standards/export', 'Dashboard\ClassController@export')->name('dashboard.standards.export');
-Route::get('/dashboard/positions/export', 'Dashboard\PositionController@export')->name('dashboard.positions.export');
-Route::get('/dashboard/voters/export', 'Dashboard\VoterController@export')->name('dashboard.voters.export');
-Route::get('/dashboard/candidates/export', 'Dashboard\CandidateController@export')->name('dashboard.candidates.export');
+Route::get('/dashboard/standards/export', 'Dashboard\StandardController@export')
+    ->name('dashboard.standards.export');
+Route::get('/dashboard/positions/export', 'Dashboard\PositionController@export')
+    ->name('dashboard.positions.export');
+Route::get('/dashboard/voters/export', 'Dashboard\VoterController@export')
+    ->name('dashboard.voters.export');
+Route::get('/dashboard/candidates/export', 'Dashboard\CandidateController@export')
+    ->name('dashboard.candidates.export');
 
-Route::post('/dashboard/standards/import/{format}', 'Dashboard\ClassController@import')->name('dashboard.standards.import');
-Route::post('/dashboard/positions/import/{format}', 'Dashboard\PositionController@import')->name('dashboard.positions.import');
-Route::post('/dashboard/voters/import/{format}', 'Dashboard\VoterController@import')->name('dashboard.voters.import');
-Route::post('/dashboard/candidates/import/{format}', 'Dashboard\CandidateController@import')->name('dashboard.candidates.import');
-Route::get('/dashboard/elections/{election}/launch', 'Dashboard\ElectionController@launch')->name('dashboard.elections.launch');
-Route::post('/dashboard/elections/launch', 'Dashboard\ElectionController@launchElection')->name('dashboard.elections.launch.push');
-Route::get('/election/{slug}', 'FrontEnd\ElectionController@vote')->name('election.vote');
-Route::post('/election/{slug}', 'FrontEnd\ElectionController@voterLogin')->name('election.vote.login');
+Route::post('/dashboard/standards/import/{format}', 'Dashboard\StandardController@import')
+    ->name('dashboard.standards.import');
+Route::post('/dashboard/positions/import/{format}', 'Dashboard\PositionController@import')
+    ->name('dashboard.positions.import');
+Route::post('/dashboard/voters/import/{format}', 'Dashboard\VoterController@import')
+    ->name('dashboard.voters.import');
+Route::post('/dashboard/candidates/import/{format}', 'Dashboard\CandidateController@import')
+    ->name('dashboard.candidates.import');
+
+Route::post('/dashboard/elections/{election}/launch', 'Dashboard\ElectionController@launchElection')
+    ->name('dashboard.elections.launch');
+Route::post('/dashboard/elections/{election}/complete', 'Dashboard\ElectionController@completeElection')
+    ->name('dashboard.elections.complete');
+
+Route::get('/election/{slug}', 'FrontEnd\ElectionController@showCandidates')
+    ->name('election.vote');
+Route::get('/election/{slug}/login', 'Auth\VoterLoginController@showLoginForm')
+    ->name('election.vote.login');
+Route::post('/election/{slug}', 'Auth\VoterLoginController@login');
 
 Route::prefix('dashboard')->namespace('Dashboard')
     ->name('dashboard.')

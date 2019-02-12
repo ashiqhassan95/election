@@ -43,7 +43,7 @@
                 <td>{{ $voter->uid }}</td>
                 <td>{{ $voter->standard->name }}</td>
                 <td>{{ $voter->gender() }}</td>
-                <td>{{ date('d-m-Y', strtotime($voter->birth_date))  }}</td>
+                <td>{{ date('Y-m-d', strtotime($voter->birth_date))  }}</td>
                 <td>{{ date('d-m-Y', strtotime($voter->created_at)) }}</td>
                 {{--<td>{{ date('d-m-Y', strtotime($voter->updated_at)) }}</td>--}}
                 <td>

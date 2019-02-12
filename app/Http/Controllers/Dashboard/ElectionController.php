@@ -46,12 +46,10 @@ class ElectionController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|max:200',
-            'poll_start_at' => 'required',
-            'poll_end_at' => 'required',
             'type' => 'required|in:0,1'
         ]);
 
-        $entry_data = $request->only(['title', 'poll_start_at', 'poll_end_at', 'type']);
+        $entry_data = $request->only(['title', 'type']);
         $entry_data = StoreHelper::AssignUserAndInstitute($entry_data);
         $entry_data['status'] = '0';
         $this->electionRepository->create($entry_data);
@@ -73,13 +71,11 @@ class ElectionController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|max:200',
-            'poll_start_at' => 'required',
-            'poll_end_at' => 'required',
             'type' => 'required|in:0,1'
         ]);
 
         $this->electionRepository->update($election->getKey(), $request->only([
-            'title', 'poll_start_at', 'poll_end_at', 'type'
+            'title', 'type'
         ]));
 
         return redirect()->back()->with('message', __('dashboard-success.update', ['entity' => $this->className]));
@@ -99,10 +95,9 @@ class ElectionController extends Controller
             return view('dashboard.elections.launched', compact('election'));
     }
 
-    public function launchElection(Request $request)
+    public function launchElection(Request $request, Election $election)
     {
-        $election = $this->electionRepository->find($request->get('election_id'));
-        if(Is_null($election->slug)){
+        if($election['status'] == 0){
             $slug =  Str::random(10);
 
             while(Election::query()->where('slug', $slug)->exists()) {
@@ -112,12 +107,20 @@ class ElectionController extends Controller
 
             $this->electionRepository->update($election->getKey(), [
                 'slug'=> $slug,
+                'poll_start_at' => now(),
                 'status' => '1'
             ]);
-
-            $election = $this->electionRepository->find($election->getKey());
         }
-        return view('dashboard.elections.launched', compact('election'));
+        return redirect()->back();//->with('election', $election);
+    }
+
+    public function completeElection(Request $request, Election $election)
+    {
+        $this->electionRepository->update($election->getKey(),[
+            'poll_end_at' => now(),
+            'status' => 2
+        ]);
+        return redirect()->back();
     }
 
 }
