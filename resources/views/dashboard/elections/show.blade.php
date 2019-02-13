@@ -28,11 +28,11 @@
                         </tr>
                         <tr>
                             <td><strong>Polling start at</strong></td>
-                            <td>{{ $election->poll_start_at }}</td>
+                            <td>{{ $election->poll_start_at ?? 'NIL' }}</td>
                         </tr>
                         <tr>
                             <td><strong>Polling end at</strong></td>
-                            <td>{{ $election->poll_end_at }}</td>
+                            <td>{{ $election->poll_end_at ?? 'NIL' }}</td>
                         </tr>
                         <tr>
                             <td><strong>Type of election</strong></td>
@@ -40,51 +40,69 @@
                         </tr>
                         <tr>
                             <td><strong>Status</strong></td>
-                            <td>{{ $election->getStatus() }}</td>
+                            <td>
+                                @if($election['status'] == 0)
+                                    <span class="text-accent">{{ $election->getStatus() }}</span>
+                                @elseif($election['status'] == 1)
+                                    <span class="text-success">{{ $election->getStatus() }}</span>
+                                @elseif($election['status'] == 2)
+                                    <span class="text-danger">{{ $election->getStatus() }}</span>
+                                @endif
+                            </td>
                         </tr>
                         @if($election['status'] == 1)
                             <tr>
                                 <td><strong>Url</strong></td>
                                 <td>
-                                    <a href="{{ route('election.vote', $election['slug']) }}" target="_blank">{{ route('election.vote', $election['slug']) }}</a>
+                                    <a href="{{ route('election.vote', $election['slug']) }}"
+                                       target="_blank">{{ route('election.vote', $election['slug']) }}</a>
                                 </td>
                             </tr>
                         @endif
                         </tbody>
                     </table>
-                    <div class="btn-group" role="group">
-                        @if($election['status'] == 0)
-                            <form action="{{ route('dashboard.elections.launch', $election->getKey()) }}" method="post"
-                                  class="btn-group">
-                                @csrf
-                                <button class="btn btn-primary">Launch</button>
-                            </form>
-                        @elseif($election['status'] == 1)
-                            <form action="{{ route('dashboard.elections.complete', $election->getKey()) }}"
-                                  method="post"
-                                  class="btn-group">
-                                @csrf
-                                <button class="btn btn-primary">Complete</button>
-                            </form>
-                        @elseif($election['status'] == 2)
-                            <form action="{{ route('dashboard.elections.destroy', $election->getKey()) }}" method="post"
-                                  class="btn-group">
-                                @csrf
-                                <button class="btn btn-primary">Delete</button>
-                            </form>
-                        @endif
-                        <a class="btn btn-primary" href="{{ route('dashboard.elections.edit', $election->getKey()) }}">Edit</a>
-                        <form class="btn-group" action="{{ route('dashboard.elections.destroy', $election->getKey()) }}"
-                              method="post">
+
+                    @if($election['status'] == 0)
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-primary" href="javascript:;"
+                               onclick="document.getElementById('launch-form').submit();">Launch</a>
+                            <a class="btn btn-primary"
+                               href="{{ route('dashboard.elections.edit', $election->getKey()) }}">Edit</a>
+                            <a class="btn btn-danger" href="javascript:;"
+                               onclick="document.getElementById('delete-form').submit();">Delete</a>
+                        </div>
+
+                        <form action="{{ route('dashboard.elections.launch', $election->getKey()) }}" method="post"
+                              id="launch-form">
                             @csrf
-                            <button class="btn btn-danger">Delete</button>
-                            <input type="hidden" class="btn">
                         </form>
-                    </div>
+                        <form action="{{ route('dashboard.elections.destroy', $election->getKey()) }}" method="post"
+                              id="delete-form">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    @elseif($election['status'] == 1)
+                        <div class="btn-group" role="group">
+                            <a href="javascript:;" onclick="document.getElementById('complete-form').submit();"
+                               class="btn btn-danger">Stop and Complete</a>
+                            <a class="btn btn-primary"
+                               href="#">Show Voters</a>
+                        </div>
 
-
+                        <form action="{{ route('dashboard.elections.complete', $election->getKey()) }}"
+                              method="post"
+                              id="complete-form">
+                            @csrf
+                        </form>
+                    @elseif($election['status'] == 2)
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-primary"
+                               href="{{ route('election.show.result', $election->getKey()) }}">Show result</a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

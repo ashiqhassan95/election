@@ -67,12 +67,19 @@ Route::post('/dashboard/elections/{election}/launch', 'Dashboard\ElectionControl
     ->name('dashboard.elections.launch');
 Route::post('/dashboard/elections/{election}/complete', 'Dashboard\ElectionController@completeElection')
     ->name('dashboard.elections.complete');
+Route::get('/dashboard/election/{election}/result', 'Dashboard\ElectionController@showResult')
+    ->name('election.show.result');
+Route::post('/dashboard/election/{election}/result', 'Dashboard\ElectionController@processResult')
+    ->name('election.process.result');
 
 Route::get('/election/{slug}', 'FrontEnd\ElectionController@showCandidates')
     ->name('election.vote');
 Route::get('/election/{slug}/login', 'Auth\VoterLoginController@showLoginForm')
     ->name('election.vote.login');
 Route::post('/election/{slug}', 'Auth\VoterLoginController@login');
+
+Route::post('/election/{slug}/caste', 'FrontEnd\ElectionController@casteVote')->name('frontend.election.vote.caste');
+Route::get('/election/{slug}/thanks', 'FrontEnd\ElectionController@thanks')->name('frontend.election.vote.thanks');
 
 Route::prefix('dashboard')->namespace('Dashboard')
     ->name('dashboard.')

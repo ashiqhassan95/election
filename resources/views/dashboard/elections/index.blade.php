@@ -28,15 +28,15 @@
             <th>Status</th>
             <th>Created on</th>
             <th>Updated on</th>
-            <th>Actions</th>
+            {{--<th>Actions</th>--}}
         </tr>
         </thead>
         <tbody>
         @forelse($elections as $election)
             <tr>
                 <td><a href="{{ route('dashboard.elections.show', $election->id) }}">{{ $election->title }}</a></td>
-                <td>{{ $election->poll_start_at }}</td>
-                <td>{{ $election->poll_end_at }}</td>
+                <td>{{ $election->poll_start_at ?? 'NIL' }}</td>
+                <td>{{ $election->poll_end_at ?? 'NIL' }}</td>
                 <td>{{ $election->getType() }}</td>
                 <td>
                     @if($election['status'] == 0)
@@ -49,45 +49,46 @@
                 </td>
                 <td>{{ date('d-m-Y', strtotime($election->created_at)) }}</td>
                 <td>{{ date('d-m-Y', strtotime($election->updated_at)) }}</td>
-                <td>
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Table row actions">
-                        @if($election['status'] == 0)
-                            <a class="btn btn-success mr-1"
-                               href="{{ route('dashboard.elections.launch', $election->getKey()) }}"><i
-                                        class="material-icons">
-                                    power_settings_new
-                                </i></a>
-                        @elseif($election['status'] == 1)
-                            <form action="{{ route('dashboard.elections.complete', $election->getKey()) }}"
-                                  method="post">
-                                @csrf
-                                <button class="btn btn-danger mr-1">
-                                    <i class="material-icons">
-                                        power_settings_new
-                                    </i>
-                                </button>
-                            </form>
-                        @elseif($election['status'] == 2)
-                            <form action="{{ route('dashboard.elections.complete', $election->getKey()) }}"
-                                  method="post">
-                                @csrf
-                                <button class="btn btn-primary mr-1">
-                                    Result
-                                </button>
-                            </form>
-                        @endif
-                        <a class="btn btn-white mr-1" href="{{ route('dashboard.elections.edit', $election->id) }}">
-                            <i class="material-icons">&#xE254;</i>
-                        </a>
-                        <form class="d-inline" action="{{ route('dashboard.elections.destroy', $election->id) }}"
-                              method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="button" class="btn btn-white">
-                                <i class="material-icons">&#xE872;</i>
-                            </button>
-                        </form>
-                    </div>
+                {{--<td>--}}
+                    {{--<div class="btn-group btn-group-sm" role="group" aria-label="Table row actions">--}}
+                        {{--@if($election['status'] == 0)--}}
+                            {{--<a class="btn btn-success mr-1"--}}
+                               {{--href="{{ route('dashboard.elections.launch', $election->getKey()) }}"><i--}}
+                                        {{--class="material-icons">--}}
+                                    {{--power_settings_new--}}
+                                {{--</i></a>--}}
+                        {{--@elseif($election['status'] == 1)--}}
+                            {{--<form action="{{ route('dashboard.elections.complete', $election->getKey()) }}"--}}
+                                  {{--method="post">--}}
+                                {{--@csrf--}}
+                                {{--<button class="btn btn-danger mr-1">--}}
+                                    {{--<i class="material-icons">--}}
+                                        {{--power_settings_new--}}
+                                    {{--</i>--}}
+                                {{--</button>--}}
+                            {{--</form>--}}
+                        {{--@elseif($election['status'] == 2)--}}
+                            {{--<form action="{{ route('dashboard.elections.complete', $election->getKey()) }}"--}}
+                                  {{--method="post">--}}
+                                {{--@csrf--}}
+                                {{--<button class="btn btn-primary mr-1">--}}
+                                    {{--Result--}}
+                                {{--</button>--}}
+                            {{--</form>--}}
+                        {{--@endif--}}
+                        {{--<a class="btn btn-white mr-1" href="{{ route('dashboard.elections.edit', $election->id) }}">--}}
+                            {{--<i class="material-icons">&#xE254;</i>--}}
+                        {{--</a>--}}
+                        {{--<form class="d-inline" action="{{ route('dashboard.elections.destroy', $election->id) }}"--}}
+                              {{--method="post">--}}
+                            {{--@csrf--}}
+                            {{--@method('delete')--}}
+                            {{--<button type="button" class="btn btn-white">--}}
+                                {{--<i class="material-icons">&#xE872;</i>--}}
+                            {{--</button>--}}
+                        {{--</form>--}}
+                    {{--</div>--}}
+                {{--</td>--}}
             </tr>
         @empty
             <tr>
