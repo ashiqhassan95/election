@@ -17,6 +17,7 @@ class CreateCandidatesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('voter_id');
             $table->string('image')->nullable();
+            $table->integer('vote_count')->default(0);
             $table->boolean('is_active')->nullable();
 
             $table->unsignedInteger('standard_id')->nullable();

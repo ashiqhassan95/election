@@ -13,6 +13,14 @@ class Position extends Model
         'title', 'institute_id', 'user_id'
     ];
 
+    public function __construct(array $data = array())
+    {
+        parent::__construct($data);
+        foreach($data as $key => $value) {
+            $this->$key = $value;
+        }
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

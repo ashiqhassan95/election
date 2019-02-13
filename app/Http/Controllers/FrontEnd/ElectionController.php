@@ -6,6 +6,7 @@ use App\Helper\SessionHelper;
 use App\Http\Middleware\CheckForVoterLogin;
 use App\Models\Candidate;
 use App\Models\Election;
+use App\Models\Institute;
 use App\Models\Position;
 use App\Models\Voter;
 use App\Repository\Interfaces\IElectionRepository;
@@ -28,7 +29,7 @@ class ElectionController extends Controller
 
     public function __construct(IElectionRepository $electionRepository, IInstituteRepository $instituteRepository)
     {
-        $this->middleware('voter.auth');
+        $this->middleware('voter.auth')->except('thanks');
         $this->electionRepository = $electionRepository;
         $this->instituteRepository = $instituteRepository;
     }
@@ -51,6 +52,7 @@ class ElectionController extends Controller
     {
         $voter = Voter::query()->where('uid', session()->get('voter_uid'))->first();
         $election = Election::query()->where('slug', $electionSlug)->first();
+        $institute = Institute::query()->find($election['institute_id']);
 
         if (is_null($election)) {
             return 'Sorry no election';
@@ -60,28 +62,107 @@ class ElectionController extends Controller
 
         if ($election['type'] == 0) {
             $data = $this->getCandidatesForPresidential($election->getKey());
-//            $data = $this->getCandidatesForPresidential($election->getKey())->groupBy('position.title');
         } else if ($election['type'] == 1) {
             $data = $this->getCandidatesForParliamentary($election->getKey(), $voter['standard_id'])->groupBy('position_id');
-//            $data = $this->getCandidatesForParliamentary($election->getKey(), $voter['standard_id'])->groupBy('position.name');
         }
 
-        if($request->has('raw')) {
+        if ($request->has('raw')) {
             return $data;
         }
-        return view('frontend.vote-candidates', compact('data'));
+        return view('frontend.vote-candidates', compact('data', 'election', 'voter', 'institute'));
+    }
+
+    public function casteVote(Request $request, $slug)
+    {
+        $election = Election::query()->where('slug', $slug)->first();
+        $voter = Voter::query()->where('uid', session()->get('voter_uid'))->first();
+        $vote_exist = DB::table('vote_cast')
+            ->where('voter_id', $voter->getKey())
+            ->where('election_id', $election->getKey())
+            ->exists();
+        if($vote_exist) {
+            return 'You have already voted.';
+        }
+
+        $positionKeys = array_keys($request->except('_token'));
+        foreach ($positionKeys as $positionKey) {
+            $positionId = str_replace('position-', '', $positionKey);
+            $candidateId = $request->get($positionKey);
+            DB::table('vote_cast')->insert([
+                'voter_id' => $voter->getKey(),
+                'candidate_id' => $candidateId,
+                'position_id' => $positionId,
+                'election_id' => $election->getKey(),
+                'institute_id' => $election['institute_id'],
+                'voted_at' => now()
+            ]);
+            if ($candidateId != 0) {
+                Candidate::query()->find($candidateId)->increment('vote_count', 1);
+            }
+        }
+        session()->forget('voter_uid');
+        return redirect()->route('frontend.election.vote.thanks', $slug);
+    }
+
+    public function casteVoteAsDefaultNOTA(Request $request, $slug)
+    {
+        if (!session()->has('voter_uid')) {
+            return "Not authorized";
+        }
+
+        $election = Election::query()->where('slug', $slug)->first();
+        $voter = Voter::query()->where('uid', session()->get('voter_uid'))->first();
+
+        $positions = '';
+
+        if ($election->type == 0) {
+            $positions = Candidate::query()
+                ->distinct()
+                ->where('election_id', $election->getKey())
+                ->where('standard_id', $voter->standard_id)
+                ->pluck('position_id');
+        } else if ($election->type == 1) {
+            $positions = Candidate::query()
+                ->distinct()
+                ->where('election_id', $election->getKey())
+                ->pluck('position_id');
+        }
+
+        $positionKeys = array_keys($request->except('_token'));
+        foreach ($positionKeys as $positionKey) {
+            $positionId = str_replace('position-', '', $positionKey);
+            $candidateId = $request->get($positionKey);
+            DB::table('vote_cast')->insert([
+                'voter_id' => $voter->getKey(),
+                'candidate_id' => $candidateId,
+                'position_id' => $positionId,
+                'election_id' => $election->getKey(),
+                'institute_id' => $election['institute_id'],
+                'voted_at' => now()
+            ]);
+            if ($candidateId != 0) {
+                Candidate::query()->find($candidateId)->increment('vote_count', 1);
+            }
+        }
+        session()->forget('voter_uid');
+        return redirect()->route('frontend.election.vote.thanks', $slug);
+    }
+
+    public function thanks($slug)
+    {
+        $election = Election::query()->where('slug', $slug)->first();
+        return view('frontend.vote-cast-greeting', compact('election'));
     }
 
     public function getCandidatesForPresidential($electionId)
-    {  
+    {
         $candidatesCollection = new Collection();
         $positionIds = Candidate::query()
             ->distinct()
             ->where('election_id', $electionId)
             ->pluck('position_id');
 
-        foreach ($positionIds as $positionId)
-        {
+        foreach ($positionIds as $positionId) {
             $position = Position::query()->find($positionId);
             $candidates = Candidate::query()
                 ->with(['voter', 'standard'])
@@ -92,80 +173,28 @@ class ElectionController extends Controller
             $candidatesCollection->push($position);
         }
         return $candidatesCollection;
-
-    }
-
-    public function bakgetCandidatesForPresidential($electionId)
-    {
-        $candidatesCollection = Candidate::query()
-            ->where('election_id', $electionId)
-            ->with(['voter', 'standard', 'position'])
-            ->get();
-
-        $positionIds = $candidatesCollection->unique('position_id')->pluck('position_id');
-
-        $positions = new Collection();
-        foreach ($positionIds as $positionId) {
-            $pos = $positions->put('position', $candidatesCollection->where('position_id', $positionId)->pluck('position')->first());
-            $candidatesOfPosition = $candidatesCollection->where('position_id', $positionId);
-            foreach ($candidatesOfPosition as $candidate) {
-                $pos->put('candidates', $candidate);
-            }
-            //$candidates = Candidate::query()->where('position_id');
-        }
-        return $positions;
-
-        $candidates = Candidate::query()
-            ->with(['position', 'voter', 'standard'])
-            ->where('election_id', $electionId)
-            ->get();
-
-        $groupedCandidates = $candidates->groupBy('position_id');
-        $candidatePosition = [];
-        foreach ($groupedCandidates as $key => $candidates)
-        {
-            $candidatePosition['position'] = Position::query()->find($key);
-            $candidateList['position'][] = [];
-            foreach ($candidates as $candidate)
-            {
-                $candidateList['position'][] = $candidate;
-            }
-        }
-        return $candidatePosition;
     }
 
     public function getCandidatesForParliamentary($electionId, $standardId)
     {
-        return Candidate::query()
-            ->with(['position', 'voter', 'standard'])
+        $candidatesCollection = new Collection();
+        $positionIds = Candidate::query()
+            ->distinct()
             ->where('election_id', $electionId)
             ->where('standard_id', $standardId)
-            ->get();
-    }
+            ->pluck('position_id');
 
-    public function voterLogin(Request $request, $slug)
-    {
-        $this->validate($request, [
-            'uid' => 'required',
-            'birth_date' => 'required'
-        ]);
-
-        $voter = Voter::query()
-            ->where('uid', $request->get('uid'))
-            ->where('birth_date', $request->get('birth_date'))
-            ->first();
-        if (!$voter) {
-            return 'Not Great';
-        } else {
-            $election = Election::query()->where('slug', $slug)->first();
-            session()->put('voter', $voter->getKey());
-            $standard = $voter['standard_id'];
-            return Candidate::query()
-                ->with(['position'])
-                ->where('standard_id', $voter['standard_id'])
-                ->where('election_id', $election->getKey())
-                ->orderBy('position_id')
+        foreach ($positionIds as $positionId) {
+            $position = Position::query()->find($positionId);
+            $candidates = Candidate::query()
+                ->with(['voter', 'standard'])
+                ->where('election_id', $electionId)
+                ->where('standard_id', $standardId)
+                ->where('position_id', $positionId)
                 ->get();
+            $position['candidates'] = $candidates;
+            $candidatesCollection->push($position);
         }
+        return $candidatesCollection;
     }
 }
