@@ -104,6 +104,10 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script>
-        $('.data-table').DataTable({responsive: !0});
+        $('.data-table').DataTable({
+            responsive: !0,
+            ordering: true,
+            order: [[ 6, "desc" ]], // Order by created at columnd
+        });
     </script>
 @endpush

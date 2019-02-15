@@ -77,7 +77,7 @@ class StandardController extends Controller
     public function destroy(Standard $standard)
     {
         $this->standardRepository->delete($standard->getKey());
-        return redirect()->back()->with('message', __('dashboard-success.delete', ['entity' => $this->className]));
+        return redirect()->route('dashboard.standards.index');
     }
 
     public function export($format)

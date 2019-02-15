@@ -6,6 +6,8 @@ use App\Exports\CandidatesExport;
 use App\Helper\SessionHelper;
 use App\Helper\StoreHelper;
 use App\Models\Candidate;
+use App\Models\Election;
+use App\Models\Enums\ElectionStatus;
 use App\Repository\Interfaces\ICandidateRepository;
 use App\Repository\Interfaces\IElectionRepository;
 use App\Repository\Interfaces\IPositionRepository;
@@ -64,7 +66,16 @@ class CandidateController extends Controller
 
     public function index()
     {
-        $candidates = $this->candidateRepository->allByInstitute(SessionHelper::getInstitute(), ['voter', 'standard', 'position']);
+        $candidates = Candidate::query()
+            ->with(['voter', 'standard', 'position', 'election'])
+            ->where('institute_id', SessionHelper::getInstitute())
+            ->whereHas('election', function ($query) {
+                $query->where('status', ElectionStatus::BUILDING);
+            })
+            ->latest()
+            ->get();
+
+        //$this->candidateRepository->allByInstitute(SessionHelper::getInstitute(), ['voter', 'standard', 'position', 'election']);
         return view('dashboard.candidates.index', compact('candidates'));
     }
 
@@ -74,7 +85,12 @@ class CandidateController extends Controller
         $data = [
             'voter' => $voter,
             'positions' => $this->positionRepository->allByInstitute(SessionHelper::getInstitute()),
-            'elections' => $this->electionRepository->allByInstitute(SessionHelper::getInstitute()),
+//            'elections' => $this->electionRepository->allByInstitute(SessionHelper::getInstitute()),
+            'elections' => Election::query()
+                ->where('institute_id', SessionHelper::getInstitute())
+                ->where('status', ElectionStatus::BUILDING)
+                ->latest()
+                ->get(),
         ];
         return view('dashboard.candidates.create', $data);
     }
@@ -112,8 +128,11 @@ class CandidateController extends Controller
         return redirect()->route('dashboard.candidates.index');
     }
 
-    public function show(Candidate $candidate)
+    public function show($candidate)
     {
+        $candidate = Candidate::query()
+            ->with(['voter', 'standard', 'position', 'election'])
+            ->find($candidate);
         return view('dashboard.candidates.show', compact('candidate'));
     }
 
@@ -123,7 +142,12 @@ class CandidateController extends Controller
         $data = [
             'candidate' => $candidate,
             'positions' => $this->positionRepository->allByInstitute(SessionHelper::getInstitute()),
-            'elections' => $this->electionRepository->allByInstitute(SessionHelper::getInstitute()),
+//            'elections' => $this->electionRepository->allByInstitute(SessionHelper::getInstitute()),
+            'elections' => Election::query()
+                ->where('institute_id', SessionHelper::getInstitute())
+                ->where('status', ElectionStatus::BUILDING)
+                ->latest()
+                ->get(),
         ];
         return view('dashboard.candidates.edit', $data);
     }
@@ -143,7 +167,7 @@ class CandidateController extends Controller
             $image_name = sprintf('%s.%s', time(), $image_file->getClientOriginalExtension());
             $image_file->move(public_path($this->canidateImageDirectory), $image_name);
             $entry_data['image'] = $this->canidateImageDirectory . $image_name;
-            if(File::exists(public_path($candidate['image']))) {
+            if (File::exists(public_path($candidate['image']))) {
                 File::delete(public_path($candidate['image']));
             }
         }
@@ -154,7 +178,7 @@ class CandidateController extends Controller
     public function destroy(Candidate $candidate)
     {
         $this->candidateRepository->delete($candidate->getKey());
-        return redirect()->back()->with('message', __('dashboard-success.delete', ['entity' => $this->className]));
+        return redirect()->route('dashboard.candidates.index');
     }
 
     public function export($format)

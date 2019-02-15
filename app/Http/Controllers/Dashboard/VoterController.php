@@ -113,7 +113,7 @@ class VoterController extends Controller
     public function destroy(Voter $voter)
     {
         $this->voterRepository->delete($voter->getKey());
-        return redirect()->back()->with('message', __('dashboard-success.delete', ['entity' => $this->className]));
+        return redirect()->route('dashboard.voters.index');
     }
 
     public function export($format)

@@ -75,6 +75,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $this->userRepository->delete($user->getKey());
-        return redirect()->back();
+        return redirect()->route('dashboard.users.index');
     }
 }

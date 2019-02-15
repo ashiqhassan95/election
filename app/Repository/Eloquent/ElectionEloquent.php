@@ -42,7 +42,10 @@ class ElectionEloquent implements IElectionRepository
      */
     public function allByInstitute($instituteId, $columns = array('*')): Collection
     {
-        return $this->model::query()->where('institute_id', $instituteId)->get($columns);
+        return $this->model::query()
+            ->where('institute_id', $instituteId)
+            ->latest()
+            ->get($columns);
     }
 
 
