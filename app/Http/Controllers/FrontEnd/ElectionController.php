@@ -63,7 +63,7 @@ class ElectionController extends Controller
         if ($election['type'] == 0) {
             $data = $this->getCandidatesForPresidential($election->getKey());
         } else if ($election['type'] == 1) {
-            $data = $this->getCandidatesForParliamentary($election->getKey(), $voter['standard_id'])->groupBy('position_id');
+            $data = $this->getCandidatesForParliamentary($election->getKey(), $voter['standard_id']);
         }
 
         if ($request->has('raw')) {

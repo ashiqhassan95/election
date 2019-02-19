@@ -38,18 +38,22 @@
                 <td>{{ date('d-m-Y', strtotime($standard->updated_at)) }}</td>
                 <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="Table row actions">
-                        <a class="btn btn-white"
-                           href="{{ route('dashboard.standards.edit', $standard->id) }}"><i
-                                    class="material-icons">&#xE254;</i></a>
-                        <form class="d-inline" action="{{ route('dashboard.standards.destroy', $standard->id) }}"
-                              method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="button" class="btn btn-white">
-                                <i class="material-icons">&#xE872;</i>
-                            </button>
-                        </form>
+                        <a class="btn btn-white" data-toggle="tooltip" title="Edit"
+                           href="{{ route('dashboard.standards.edit', $standard->id) }}">
+                            <i class="material-icons">edit</i>
+                        </a>
+
+                        <a class="btn btn-white" data-toggle="tooltip" title="Delete"
+                           href="javascript:;" onclick="document.getElementById('delete-form').submit()">
+                            <i class="material-icons">delete</i>
+                        </a>
                     </div>
+                    <form id="delete-form" action="{{ route('dashboard.standards.destroy', $standard->id) }}"
+                          method="post">
+                        @csrf
+                        @method('delete')
+                    </form>
+                </td>
             </tr>
         @empty
             <tr>
@@ -65,63 +69,10 @@
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script>
         $('.data-table').DataTable({responsive: !0});
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                placement: 'bottom'
+            });
+        });
     </script>
 @endpush
-
-{{--@extends('dashboard.layouts.master')--}}
-{{--@section('title')--}}
-{{--Standards--}}
-{{--@endsection--}}
-
-{{--@section('content')--}}
-{{--<div class="row mt-4">--}}
-{{--<div class="col">--}}
-{{--<div class="d-flex mb-3 align-items-center">--}}
-{{--<div class="flex-grow-1">--}}
-{{--<h4 class="m-0">Standards</h4>--}}
-{{--</div>--}}
-{{--<div class="d-inline">--}}
-{{--<a href="{{ route('dashboard.standards.create') }}" class="btn btn-primary">Create</a>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--<table class="table table-bordered table-hover bg-white">--}}
-{{--<thead class="thead-light">--}}
-{{--<tr>--}}
-{{--<th scope="col">Name</th>--}}
-{{--<th scope="col">Created at</th>--}}
-{{--<th scope="col">Updated at</th>--}}
-{{--<th scope="col">Actions</th>--}}
-{{--</tr>--}}
-{{--</thead>--}}
-{{--<tbody>--}}
-{{--@forelse($standards as $standard)--}}
-{{--<tr>--}}
-{{--<td><a href="{{ route('dashboard.standards.show', $standard->id) }}">{{ $standard->name }}</a></td>--}}
-{{--<td>{{ date('d-m-Y', strtotime($standard->created_at)) }}</td>--}}
-{{--<td>{{ date('d-m-Y', strtotime($standard->updated_at)) }}</td>--}}
-{{--<td>--}}
-{{--<div class="d-inline">--}}
-{{--<a class="btn btn-sm btn-secondary" href="{{ route('dashboard.standards.edit', $standard->id) }}">Edit</a>--}}
-{{--<form class="d-inline" action="{{ route('dashboard.standards.destroy', $standard->id) }}" method="post">--}}
-{{--@csrf--}}
-{{--@method('delete')--}}
-{{--<button class="btn btn-sm btn-secondary">Delete</button>--}}
-{{--</form>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--@empty--}}
-{{--<tr>--}}
-{{--<td colspan="4" class="text-center text-danger"><b>no data available</b></td>--}}
-{{--</tr>--}}
-{{--@endforelse--}}
-{{--</tbody>--}}
-{{--</table>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--<div class="row">--}}
-{{--<div class="col">--}}
-{{--{{ $standards->links() }}--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--@endsection--}}

@@ -27,11 +27,10 @@
             <th>Name</th>
             <th>Admission #</th>
             <th>Roll #</th>
+            <th>Election</th>
             <th>Position</th>
             <th>Standard</th>
             <th>Gender</th>
-            <th>Date of Birth</th>
-            <th>Created on</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -40,7 +39,8 @@
             <tr>
                 <td>
                     <div>
-                        <img class="card-post__author-avatar" src="{{ $candidate->image }}" alt="">
+                        <img class="card-post__author-avatar" style="display: unset" src="{{ $candidate->image }}"
+                             alt="">
                     </div>
                 </td>
                 <td>
@@ -48,27 +48,41 @@
                 </td>
                 <td>{{ $candidate->voter->admission_number }}</td>
                 <td>{{ $candidate->voter->roll_number }}</td>
-                <td>{{ $candidate->position->title }}</td>
-                <td>{{ $candidate->standard->name }}</td>
+                <td>
+                    <a href="{{ route('dashboard.elections.show', $candidate->election->getKey()) }}">
+                        {{ $candidate->election->title }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('dashboard.positions.show', $candidate->position->getKey()) }}">
+                        {{ $candidate->position->title }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('dashboard.standards.show', $candidate->standard->getKey()) }}">
+                        {{ $candidate->standard->name }}
+                    </a>
+                </td>
                 <td>{{ $candidate->voter->gender() }}</td>
-                <td>{{ $candidate->voter->birth_date }}</td>
-                {{--<td>{{ date('d-m-Y', strtotime($candidate->birth_date))  }}</td>--}}
-                <td>{{ date('d-m-Y', strtotime($candidate->created_at)) }}</td>
-                {{--<td>{{ date('d-m-Y', strtotime($candidate->updated_at)) }}</td>--}}
                 <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="Table row actions">
-                        <a class="btn btn-white"
-                           href="{{ route('dashboard.candidates.edit', $candidate->id) }}"><i
-                                    class="material-icons">&#xE254;</i></a>
-                        <form class="d-inline" action="{{ route('dashboard.candidates.destroy', $candidate->id) }}"
-                              method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="button" class="btn btn-white">
-                                <i class="material-icons">&#xE872;</i>
-                            </button>
-                        </form>
+                        <a class="btn btn-white" data-toggle="tooltip" title="Edit"
+                           href="{{ route('dashboard.candidates.edit', $candidate->id) }}">
+                            <i class="material-icons">edit</i>
+                        </a>
+
+                        <a class="btn btn-white" data-toggle="tooltip" title="Delete"
+                           href="javascript:;" onclick="document.getElementById('delete-form').submit()">
+                            <i class="material-icons">delete</i>
+                        </a>
                     </div>
+                    <form id="delete-form" class="d-inline"
+                          action="{{ route('dashboard.candidates.destroy', $candidate->id) }}"
+                          method="post">
+                        @csrf
+                        @method('delete')
+                    </form>
+                </td>
             </tr>
         @empty
             <tr>
@@ -85,5 +99,10 @@
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script>
         $('.data-table').DataTable({responsive: !0});
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                placement: 'bottom'
+            });
+        });
     </script>
 @endpush
