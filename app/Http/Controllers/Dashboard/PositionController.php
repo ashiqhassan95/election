@@ -77,7 +77,7 @@ class PositionController extends Controller
     public function destroy(Position $position)
     {
         $this->positionRepository->delete($position->getKey());
-        return redirect()->back()->with('message', __('dashboard-success.delete', ['entity' => $this->className]));
+        return redirect()->route('dashboard.positions.index');
     }
 
     public function export($format)
