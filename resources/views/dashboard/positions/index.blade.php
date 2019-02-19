@@ -37,21 +37,23 @@
                 <td>{{ date('d-m-Y', strtotime($position->updated_at)) }}</td>
                 <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="Table row actions">
-                        <a class="btn btn-white"
-                           href="{{ route('dashboard.positions.edit', $position->id) }}"><i
-                                    class="material-icons">&#xE254;</i></a>
+                        <a class="btn btn-white" data-toggle="tooltip" title="Edit"
+                           href="{{ route('dashboard.positions.edit', $position->id) }}">
+                            <i class="material-icons">edit</i>
+                        </a>
 
-
-                        <form class="d-inline" action="{{ route('dashboard.positions.destroy', $position->id) }}"
-                              method="post">
-                            @csrf
-                            @method('delete')
-                            {{--<button type="button" class="btn btn-white">--}}
-                                {{--<i class="material-icons">&#xE872;</i>--}}
-                            {{--</button>--}}
-                            @include('dashboard.children.delete-item')
-                        </form>
+                        <a class="btn btn-white" data-toggle="tooltip" title="Delete"
+                           href="javascript:;" onclick="document.getElementById('delete-form').submit()">
+                            <i class="material-icons">delete</i>
+                        </a>
                     </div>
+                    <form id="delete-form" class="d-inline"
+                          action="{{ route('dashboard.positions.destroy', $position->id) }}"
+                          method="post">
+                        @csrf
+                        @method('delete')
+                    </form>
+                </td>
             </tr>
         @empty
             <tr>
@@ -66,5 +68,10 @@
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script>
         $('.data-table').DataTable({responsive: !0});
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                placement: 'bottom'
+            });
+        });
     </script>
 @endpush

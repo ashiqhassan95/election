@@ -27,7 +27,7 @@
                                     <form action="/election/{{ $election['slug'] }}" method="post">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="uidInput">Email UID</label>
+                                            <label for="uidInput">Enter UID</label>
                                             <input type="text" name="uid"
                                                    class="form-control{{ $errors->has('uid') ? ' is-invalid' : '' }}"
                                                    id="uidInput" required

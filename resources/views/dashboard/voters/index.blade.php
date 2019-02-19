@@ -45,28 +45,28 @@
                 <td>{{ $voter->gender() }}</td>
                 <td>{{ date('Y-m-d', strtotime($voter->birth_date))  }}</td>
                 <td>{{ date('d-m-Y', strtotime($voter->created_at)) }}</td>
-                {{--<td>{{ date('d-m-Y', strtotime($voter->updated_at)) }}</td>--}}
                 <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="Table row actions">
-                        <form action="{{ route('dashboard.candidates.create')}}">
-                            <input type="hidden" name="voter_id" value="{{ $voter->getKey() }}">
-                            <button class="btn btn-white" data-title="make it as candidate">
-                                <i class="material-icons">person_add</i>
-                            </button>
-                        </form>
+                        <a class="btn btn-white" data-toggle="tooltip" title="make it as candidate"
+                           href="{{ route('dashboard.candidates.create') }}?voter_id={{ $voter->id }}">
+                            <i class="material-icons">person_add</i>
+                        </a>
+                        <a class="btn btn-white" data-toggle="tooltip" title="Edit"
+                           href="{{ route('dashboard.voters.edit', $voter->id) }}">
+                            <i class="material-icons">edit</i>
+                        </a>
 
-                        <a class="btn btn-white"
-                           href="{{ route('dashboard.voters.edit', $voter->id) }}"><i
-                                    class="material-icons">&#xE254;</i></a>
-                        <form class="d-inline" action="{{ route('dashboard.voters.destroy', $voter->id) }}"
-                              method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="button" class="btn btn-white">
-                                <i class="material-icons">&#xE872;</i>
-                            </button>
-                        </form>
+                        <a class="btn btn-white" data-toggle="tooltip" title="Delete"
+                           href="javascript:;" onclick="document.getElementById('delete-form').submit()">
+                            <i class="material-icons">delete</i>
+                        </a>
                     </div>
+                    <form id="delete-form" action="{{ route('dashboard.voters.destroy', $voter->id) }}"
+                          method="post">
+                        @csrf
+                        @method('delete')
+                    </form>
+                </td>
             </tr>
         @empty
             <tr>
@@ -83,5 +83,10 @@
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script>
         $('.data-table').DataTable({responsive: !0});
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                placement: 'bottom'
+            });
+        });
     </script>
 @endpush
