@@ -69,24 +69,24 @@
                 <span>Candidates</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link{{ (isset($selected_nav) && $selected_nav == 'users') ? ' active' : '' }}"
-               href="{{ route('dashboard.users.index') }}">
-                <i class="material-icons">person</i>
-                <span>Users</span>
-            </a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle{{ (isset($selected_nav) && str_contains($selected_nav, 'settings')) ? ' active' : '' }}"
-               href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
-               aria-expanded="true">
-                <i class="material-icons">&#xE7FD;</i>
-                <span>Settings</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-small">
-                <a class="dropdown-item{{ (isset($selected_nav) && $selected_nav == 'settings.general') ? ' active' : '' }}" href="{{ route('dashboard.settings.general') }}">General</a>
-                <a class="dropdown-item{{ (isset($selected_nav) && $selected_nav == 'settings.institute') ? ' active' : '' }}" href="{{ route('dashboard.settings.institute') }}">Institute</a>
-            </div>
-        </li>
+        {{--<li class="nav-item">--}}
+            {{--<a class="nav-link{{ (isset($selected_nav) && $selected_nav == 'users') ? ' active' : '' }}"--}}
+               {{--href="{{ route('dashboard.users.index') }}">--}}
+                {{--<i class="material-icons">person</i>--}}
+                {{--<span>Users</span>--}}
+            {{--</a>--}}
+        {{--</li>--}}
+        {{--<li class="nav-item dropdown">--}}
+            {{--<a class="nav-link dropdown-toggle{{ (isset($selected_nav) && str_contains($selected_nav, 'settings')) ? ' active' : '' }}"--}}
+               {{--href="#" data-toggle="dropdown" role="button" aria-haspopup="true"--}}
+               {{--aria-expanded="true">--}}
+                {{--<i class="material-icons">&#xE7FD;</i>--}}
+                {{--<span>Settings</span>--}}
+            {{--</a>--}}
+            {{--<div class="dropdown-menu dropdown-menu-small">--}}
+                {{--<a class="dropdown-item{{ (isset($selected_nav) && $selected_nav == 'settings.general') ? ' active' : '' }}" href="{{ route('dashboard.settings.general') }}">General</a>--}}
+                {{--<a class="dropdown-item{{ (isset($selected_nav) && $selected_nav == 'settings.institute') ? ' active' : '' }}" href="{{ route('dashboard.settings.institute') }}">Institute</a>--}}
+            {{--</div>--}}
+        {{--</li>--}}
     </ul>
 </div>

@@ -77,7 +77,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row">
                             <div class="col">
                                 <span>UID</span>
                                 <span>{{ $voter->uid }}</span>

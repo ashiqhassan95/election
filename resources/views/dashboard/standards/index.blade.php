@@ -43,10 +43,18 @@
                             <i class="material-icons">edit</i>
                         </a>
 
-                        <a class="btn btn-white" data-toggle="tooltip" title="Delete"
-                           href="javascript:;" onclick="document.getElementById('delete-form').submit()">
+                        {{--<a class="btn btn-white" data-toggle="tooltip" title="Delete"--}}
+                        {{--href="javascript:;" onclick="document.getElementById('delete-form').submit()">--}}
+                        {{--<i class="material-icons">delete</i>--}}
+                        {{--</a>--}}
+                        <button type="button" class="btn btn-white" data-toggle="modal"
+                                data-target="#deleteModal-{{ $standard->getKey() }}">
                             <i class="material-icons">delete</i>
-                        </a>
+                        </button>
+                        @include('dashboard.children.delete-item', [
+                            'link' => route('dashboard.standards.destroy', $standard->getKey()),
+                            'id' => $standard->getKey()
+                            ])
                     </div>
                     <form id="delete-form" action="{{ route('dashboard.standards.destroy', $standard->id) }}"
                           method="post">

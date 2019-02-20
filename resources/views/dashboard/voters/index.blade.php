@@ -28,7 +28,6 @@
             <th>Gender</th>
             <th>Date of birth</th>
             <th>Created on</th>
-            {{--<th>Updated on</th>--}}
             <th>Actions</th>
         </tr>
         </thead>

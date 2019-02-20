@@ -91,7 +91,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row">
                             <div class="col w-50">
                                 <span>Created at</span>
                                 <span>{{ $candidate->created_at }}</span>
