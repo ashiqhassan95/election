@@ -11,8 +11,8 @@
                 <div class="row">
                     <div class="col-md-7">
                         <h1 class="welcome-heading display-5 text-white">Computerized <br>Voting System</h1>
-                        <p class="text-white">We can help you take your idea from concept to shipping using the latest
-                            technologies and best practices available.</p>
+                        <p class="text-white">We can help you take your traditional voting system to computerized voting
+                            using the latest technologies and best practices available.</p>
                         <a href="{{ route('register') }}"
                            class="btn btn-lg btn-outline-white btn-pill align-self-center">Register now</a>
                     </div>

@@ -8,7 +8,6 @@
 @endsection
 
 @section('content')
-    <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         <div class="col mb-0">
             <span class="text-uppercase page-subtitle">Institute</span>
@@ -16,10 +15,8 @@
         </div>
     </div>
 
-    <!-- End Page Header -->
     <div class="row">
         <div class="col-lg-6 col-md">
-            <!-- Add New Standard Form -->
             <div class="card card-small mb-3">
                 <div class="card-body">
                     <form action="{{ route('dashboard.institutes.update', $institute->getKey()) }}" method="post">
@@ -108,7 +105,6 @@
                     </form>
                 </div>
             </div>
-            <!-- / Add New Standard Form -->
         </div>
     </div>
 @endsection

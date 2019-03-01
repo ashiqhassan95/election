@@ -10,12 +10,10 @@
 @section('content')
 
     <div class="page-header row no-gutters py-4">
-        {{--<div class="col-12 col-md-4 text-center text-sm-left mb-4 mb-sm-0">--}}
         <div class="col-12 col-md-6 text-center text-md-left mb-4 mb-md-0">
             <span class="text-uppercase page-subtitle">Users</span>
             <h3 class="page-title">All Users</h3>
         </div>
-        {{--<div class="col-12 col-md-6 offset-md-2 d-flex align-items-center justify-content-center justify-content-sm-end">--}}
         <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-end">
             <div>
                 <a class="btn btn-primary" href="{{ route('invite.show') }}"><i

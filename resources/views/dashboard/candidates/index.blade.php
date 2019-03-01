@@ -8,18 +8,13 @@
 @endpush
 
 @section('content')
-    <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         @include('dashboard.includes.data-table-top-options', [
             'title' => 'Candidates',
-            'create_link' => route('dashboard.candidates.create'),
-            'export_link_csv' => route('dashboard.candidates.export', 'csv'),
-            'export_link_excel' => route('dashboard.candidates.export', 'excel'),
+            'create_link' => route('dashboard.candidates.create')
         ])
     </div>
-    <!-- End Page Header -->
 
-    <!-- Transaction History Table -->
     <table class="data-table candidates-table d-none">
         <thead>
         <tr>
@@ -91,7 +86,6 @@
         @endforelse
         </tbody>
     </table>
-    <!-- End Transaction History Table -->
 @endsection
 
 @push('js-body')

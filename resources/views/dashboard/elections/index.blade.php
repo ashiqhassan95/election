@@ -8,16 +8,13 @@
 @endpush
 
 @section('content')
-    <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         @include('dashboard.includes.data-table-top-options', [
             'title' => 'Elections',
             'create_link' => route('dashboard.elections.create'),
         ])
     </div>
-    <!-- End Page Header -->
 
-    <!-- Transaction History Table -->
     <table class="data-table elections-table d-none">
         <thead>
         <tr>
@@ -28,7 +25,6 @@
             <th>Status</th>
             <th>Created on</th>
             <th>Updated on</th>
-            {{--<th>Actions</th>--}}
         </tr>
         </thead>
         <tbody>
@@ -49,46 +45,6 @@
                 </td>
                 <td>{{ date('d-m-Y', strtotime($election->created_at)) }}</td>
                 <td>{{ date('d-m-Y', strtotime($election->updated_at)) }}</td>
-                {{--<td>--}}
-                    {{--<div class="btn-group btn-group-sm" role="group" aria-label="Table row actions">--}}
-                        {{--@if($election['status'] == 0)--}}
-                            {{--<a class="btn btn-success mr-1"--}}
-                               {{--href="{{ route('dashboard.elections.launch', $election->getKey()) }}"><i--}}
-                                        {{--class="material-icons">--}}
-                                    {{--power_settings_new--}}
-                                {{--</i></a>--}}
-                        {{--@elseif($election['status'] == 1)--}}
-                            {{--<form action="{{ route('dashboard.elections.complete', $election->getKey()) }}"--}}
-                                  {{--method="post">--}}
-                                {{--@csrf--}}
-                                {{--<button class="btn btn-danger mr-1">--}}
-                                    {{--<i class="material-icons">--}}
-                                        {{--power_settings_new--}}
-                                    {{--</i>--}}
-                                {{--</button>--}}
-                            {{--</form>--}}
-                        {{--@elseif($election['status'] == 2)--}}
-                            {{--<form action="{{ route('dashboard.elections.complete', $election->getKey()) }}"--}}
-                                  {{--method="post">--}}
-                                {{--@csrf--}}
-                                {{--<button class="btn btn-primary mr-1">--}}
-                                    {{--Result--}}
-                                {{--</button>--}}
-                            {{--</form>--}}
-                        {{--@endif--}}
-                        {{--<a class="btn btn-white mr-1" href="{{ route('dashboard.elections.edit', $election->id) }}">--}}
-                            {{--<i class="material-icons">&#xE254;</i>--}}
-                        {{--</a>--}}
-                        {{--<form class="d-inline" action="{{ route('dashboard.elections.destroy', $election->id) }}"--}}
-                              {{--method="post">--}}
-                            {{--@csrf--}}
-                            {{--@method('delete')--}}
-                            {{--<button type="button" class="btn btn-white">--}}
-                                {{--<i class="material-icons">&#xE872;</i>--}}
-                            {{--</button>--}}
-                        {{--</form>--}}
-                    {{--</div>--}}
-                {{--</td>--}}
             </tr>
         @empty
             <tr>
@@ -97,7 +53,6 @@
         @endforelse
         </tbody>
     </table>
-    <!-- End Transaction History Table -->
 @endsection
 
 @push('js-body')

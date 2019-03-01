@@ -8,7 +8,6 @@
 @endpush
 
 @section('content')
-    <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
             <span class="text-uppercase page-subtitle">Institutes</span>
@@ -28,15 +27,11 @@
             </div>
         </div>
     </div>
-    <!-- End Page Header -->
-    <!-- Transaction History Table -->
+
     <table class="data-table institutes-table d-none">
         <thead>
         <tr>
             <th>Name</th>
-            {{--<th>Address</th>--}}
-            {{--<th>City</th>--}}
-            {{--<th>State</th>--}}
             <th>Country</th>
             <th>Created at</th>
             <th>Updated at</th>
@@ -49,9 +44,6 @@
                 <td>
                     <a href="{{ route('dashboard.institutes.show', $institute->id) }}">{{ $institute->name }}</a>
                 </td>
-                {{--<td>{{ $institute->address }}</td>--}}
-                {{--<td>{{ $institute->city }}</td>--}}
-                {{--<td>{{ $institute->state }}</td>--}}
                 <td>{{ $institute->country }}</td>
                 <td>{{ date('d-m-Y', strtotime($institute->created_at)) }}</td>
                 <td>{{ date('d-m-Y', strtotime($institute->updated_at)) }}</td>
@@ -77,7 +69,6 @@
         @endforelse
         </tbody>
     </table>
-    <!-- End Transaction History Table -->
 @endsection
 @push('js-body')
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>

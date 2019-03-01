@@ -8,7 +8,6 @@
 @endsection
 
 @section('content')
-    <!-- Page Header -->
     <div class="row page-header no-gutters py-4">
         <div class="col mb-0">
             <span class="text-uppercase page-subtitle">Candidates</span>
@@ -16,10 +15,8 @@
         </div>
     </div>
 
-    <!-- End Page Header -->
     <div class="row">
         <div class="col-lg-7 col-md">
-            <!-- Add New Position Form -->
             <div class="card card-small mb-3">
                 <div class="card-body">
                     <form action="{{ route('dashboard.candidates.store') }}" method="post"
@@ -118,11 +115,10 @@
                             </tr>
                             </tbody>
                         </table>
-                        <button class="btn btn-primary"><i class="material-icons mr-1">save</i>Save</button>
+                        <button class="btn btn-primary">Save</button>
                     </form>
                 </div>
             </div>
-            <!-- / Add New Position Form -->
         </div>
     </div>
 @endsection

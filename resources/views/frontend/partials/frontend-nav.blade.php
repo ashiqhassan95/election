@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark px-0">
     <a class="navbar-brand" href="#">
         <img src="/images/shards/agency-landing/shards-logo-white.svg" class="mr-2" alt="Shards - Agency Landing Page">
-        Elect
+        CVS
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,10 +16,10 @@
                 <a class="nav-link" href="#">Our Services</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Blog</a>
+                <a class="nav-link" href="#">Testimonials</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Testimonials</a>
+                <a class="nav-link" href="#">Contact</a>
             </li>
         </ul>
 

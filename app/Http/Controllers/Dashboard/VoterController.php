@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Exports\VotersExport;
 use App\Helper\SessionHelper;
 use App\Helper\StoreHelper;
+use App\Imports\VotersImport;
 use App\Models\Voter;
 use App\Repository\Interfaces\IStandardRepository;
 use App\Repository\Interfaces\IVoterRepository;
@@ -123,5 +124,39 @@ class VoterController extends Controller
         else if($format == 'csv') $extension = 'csv';
 
         return Excel::download(new VotersExport(), 'voters.' . $extension);
+    }
+
+    public function showImportForm()
+    {
+        return view('dashboard.voters.import');
+    }
+
+    public function import(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|file'//|mimes:csv,xlsx,xls'
+        ]);
+//        return $request->file('file')->get();
+
+        $import = Excel::import(new VotersImport(), $request->file('file'));
+        return redirect()->back();
+    }
+
+    public function importComplicated(Request $request)
+    {
+        $path = $request->file('file')->getRealPath();
+        $data = Excel::load($path)->get();
+//
+//        if($data->count()){
+//            foreach ($data as $key => $value) {
+//                $arr[] = ['title' => $value->title, 'description' => $value->description];
+//            }
+//
+//            if(!empty($arr)){
+//                Item::insert($arr);
+//            }
+//        }
+//
+//        return back()->with('success', 'Insert Record successfully.');
     }
 }

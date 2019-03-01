@@ -12,10 +12,7 @@
     <div class="page-header row no-gutters py-4">
         @include('dashboard.includes.data-table-top-options', [
             'title' => 'Standards',
-            'create_link' => route('dashboard.standards.create'),
-            'export_link_csv' => route('dashboard.standards.create', 'csv'),
-            'export_link_excel' => route('dashboard.standards.export', 'excel'),
-            //'import_link' => route('dashboard.standards.import'),
+            'create_link' => route('dashboard.standards.create')
         ])
     </div>
 
@@ -42,11 +39,6 @@
                            href="{{ route('dashboard.standards.edit', $standard->id) }}">
                             <i class="material-icons">edit</i>
                         </a>
-
-                        {{--<a class="btn btn-white" data-toggle="tooltip" title="Delete"--}}
-                        {{--href="javascript:;" onclick="document.getElementById('delete-form').submit()">--}}
-                        {{--<i class="material-icons">delete</i>--}}
-                        {{--</a>--}}
                         <button type="button" class="btn btn-white" data-toggle="modal"
                                 data-target="#deleteModal-{{ $standard->getKey() }}">
                             <i class="material-icons">delete</i>

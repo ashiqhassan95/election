@@ -45,23 +45,13 @@ Route::post('/dashboard/users/invite', 'InviteController@process')->name('invite
 Route::get('/invite/{token}', 'InviteController@accept')->name('invite.accept');
 Route::post('/invite', 'InviteController@register')->name('invite.register');
 
-Route::get('/dashboard/standards/export', 'Dashboard\StandardController@export')
-    ->name('dashboard.standards.export');
-Route::get('/dashboard/positions/export', 'Dashboard\PositionController@export')
-    ->name('dashboard.positions.export');
 Route::get('/dashboard/voters/export', 'Dashboard\VoterController@export')
     ->name('dashboard.voters.export');
-Route::get('/dashboard/candidates/export', 'Dashboard\CandidateController@export')
-    ->name('dashboard.candidates.export');
 
-Route::post('/dashboard/standards/import/{format}', 'Dashboard\StandardController@import')
-    ->name('dashboard.standards.import');
-Route::post('/dashboard/positions/import/{format}', 'Dashboard\PositionController@import')
-    ->name('dashboard.positions.import');
-Route::post('/dashboard/voters/import/{format}', 'Dashboard\VoterController@import')
+Route::get('/dashboard/voters/import', 'Dashboard\VoterController@showImportForm')
+    ->name('dashboard.voters.show.import');
+Route::post('/dashboard/voters/import', 'Dashboard\VoterController@import')
     ->name('dashboard.voters.import');
-Route::post('/dashboard/candidates/import/{format}', 'Dashboard\CandidateController@import')
-    ->name('dashboard.candidates.import');
 
 Route::post('/dashboard/elections/{election}/launch', 'Dashboard\ElectionController@launchElection')
     ->name('dashboard.elections.launch');

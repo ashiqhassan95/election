@@ -103,4 +103,8 @@
     border-radius: 0.375rem;
 }
 
+.phpdebugbar {
+    display: none;
+}
+
 

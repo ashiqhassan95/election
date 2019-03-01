@@ -8,7 +8,6 @@
 @endsection
 
 @section('content')
-    <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         <div class="col mb-0">
             <span class="text-uppercase page-subtitle">Positions</span>
@@ -16,10 +15,8 @@
         </div>
     </div>
 
-    <!-- End Page Header -->
     <div class="row">
         <div class="col-lg-6 col-md">
-            <!-- Add New Position Form -->
             <div class="card card-small mb-3">
                 <div class="card-body">
                     <form action="{{ route('dashboard.positions.store') }}" method="post">
@@ -34,11 +31,10 @@
                                 </span>
                             @endforeach
                         </div>
-                        <button class="btn btn-primary"><i class="material-icons mr-1">save</i>Save</button>
+                        <button class="btn btn-primary">Save</button>
                     </form>
                 </div>
             </div>
-            <!-- / Add New Position Form -->
         </div>
     </div>
 @endsection

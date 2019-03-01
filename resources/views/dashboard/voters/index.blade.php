@@ -12,6 +12,7 @@
         @include('dashboard.includes.data-table-top-options', [
             'title' => 'Voters',
             'create_link' => route('dashboard.voters.create'),
+            'import_link' => route('dashboard.voters.show.import'),
             'export_link_csv' => route('dashboard.voters.create', 'csv'),
             'export_link_excel' => route('dashboard.voters.export', 'excel'),
         ])

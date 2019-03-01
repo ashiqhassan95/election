@@ -12,9 +12,7 @@
     <div class="page-header row no-gutters py-4">
         @include('dashboard.includes.data-table-top-options', [
             'title' => 'Positions',
-            'create_link' => route('dashboard.positions.create'),
-            'export_link_csv' => route('dashboard.positions.create', 'csv'),
-            'export_link_excel' => route('dashboard.positions.export', 'excel'),
+            'create_link' => route('dashboard.positions.create')
         ])
     </div>
 
@@ -63,6 +61,7 @@
         </tbody>
     </table>
 @endsection
+
 @push('js-body')
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>

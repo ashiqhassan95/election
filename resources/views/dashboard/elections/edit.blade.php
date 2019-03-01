@@ -12,7 +12,6 @@
 @endpush
 
 @section('content')
-    <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         <div class="col mb-0">
             <span class="text-uppercase page-subtitle">Elections</span>
@@ -38,39 +37,6 @@
                             @endforeach
                         </div>
 
-                        {{--<div class="form-row">--}}
-                            {{--<div class="col">--}}
-                                {{--<div class="form-group">--}}
-                                    {{--<p>{{ $election->poll_start_at->format('d-m-Y H:i:s') }}</p>--}}
-                                    {{--<label for="pollStartDateTime">Poll start date time</label>--}}
-                                    {{--<input class="form-control flatpickr-input{{ $errors->has('poll_start_at') ? ' is-invalid' : '' }}"--}}
-                                           {{--type="datetime-local" name="poll_start_at"--}}
-                                           {{--id="pollStartDateTime" data-input="true" placeholder="select date and time"--}}
-                                           {{--value="{{ $election->poll_start_at->format('d-m-Y H:i:s') }}">--}}
-                                    {{--@foreach($errors->get('poll_start_at') as $error)--}}
-                                        {{--<span class="invalid-feedback" role="alert">--}}
-                                            {{--<strong>{{ $error }}</strong>--}}
-                                        {{--</span>--}}
-                                    {{--@endforeach--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="col">--}}
-                                {{--<div class="form-group">--}}
-                                    {{--<p>{{ $election->poll_end_at->format('d-m-Y H:i:s') }}</p>--}}
-                                    {{--<label for="pollEndDateTime">Poll end date time</label>--}}
-                                    {{--<input class="form-control flatpickr-input{{ $errors->has('poll_end_at') ? ' is-invalid' : '' }}"--}}
-                                           {{--type="datetime-local" name="poll_end_at"--}}
-                                           {{--id="pollEndDateTime" data-input placeholder="select date and time"--}}
-                                           {{--value="{{ $election->poll_end_at->format('d-m-Y H:i:s') }}">--}}
-                                    {{--@foreach($errors->get('poll_end_at') as $error)--}}
-                                        {{--<span class="invalid-feedback" role="alert">--}}
-                                            {{--<strong>{{ $error }}</strong>--}}
-                                        {{--</span>--}}
-                                    {{--@endforeach--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
                         <div class="form-group">
                             <label for="type">Please select election type</label>
                             <select name="type" class="form-control" id="type">
@@ -85,14 +51,3 @@
         </div>
     </div>
 @endsection
-
-@push('js-body')
-    {{--<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>--}}
-    {{--<script>--}}
-    {{--$(".flatpickr-input").flatpickr({--}}
-    {{--enableTime: true,--}}
-    {{--allowInput: true,--}}
-    {{--dateFormat: "Y-m-d H:i",--}}
-    {{--});--}}
-    {{--</script>--}}
-@endpush
