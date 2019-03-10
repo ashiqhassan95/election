@@ -19,7 +19,7 @@ class CheckForVoterLogin
         $strLength = strlen($request->getRequestUri());
         $electionSlug = substr($request->getRequestUri(), $strLength - 10, 10);
         if (!session()->has('voter_uid'))
-            return redirect()->route('election.vote.login', $electionSlug);
+            return redirect()->route('elections.vote.login', $electionSlug);
 
         return $next($request);
     }

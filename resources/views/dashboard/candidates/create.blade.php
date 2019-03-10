@@ -3,6 +3,10 @@
     Create candidate
 @endsection
 
+@push('page-content-title')
+    Candidates
+@endpush
+
 @section('message')
     @includeWhen(session()->has('message'), 'dashboard.includes.session-alert-message')
 @endsection

@@ -3,6 +3,10 @@
     Create voter
 @endsection
 
+@push('page-content-title')
+    Voters
+@endpush
+
 @section('message')
     @includeWhen(session()->has('message'), 'dashboard.includes.session-alert-message')
 @endsection

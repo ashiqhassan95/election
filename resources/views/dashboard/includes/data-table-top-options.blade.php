@@ -1,13 +1,14 @@
-{{--<div class="col-12 col-md-4 text-center text-sm-left mb-4 mb-sm-0">--}}
+@section('page-content-title')
+    {{ $title }}
+@endsection
 <div class="col-12 col-md-6 text-center text-md-left mb-4 mb-md-0">
     <span class="text-uppercase page-subtitle">{{ $title }}</span>
-    <h3 class="page-title">All {{ $title }}</h3>
 </div>
-{{--<div class="col-12 col-md-6 offset-md-2 d-flex align-items-center justify-content-center justify-content-sm-end">--}}
+
 <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-end">
     <div>
         @if(isset($create_link))
-            <a class="btn btn-white" href="{{ $create_link }}">Create</a>
+            <a class="btn btn-primary" href="{{ $create_link }}">Create</a>
         @endif
 
         @if(isset($import_link))

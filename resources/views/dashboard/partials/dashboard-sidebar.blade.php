@@ -26,13 +26,12 @@
 <div class="nav-wrapper">
     {{--<ul class="nav nav--no-borders flex-column">--}}
     <ul class="nav flex-column">
-
         {{--<li class="nav-item">--}}
-        {{--<a class="nav-link{{ (isset($selected_nav) && $selected_nav == 'institutes') ? ' active' : '' }}"--}}
-        {{--href="{{ route('dashboard.institutes.index') }}">--}}
-        {{--<i class="material-icons">&#xE917;</i>--}}
-        {{--<span>Institutes</span>--}}
-        {{--</a>--}}
+            {{--<a class="nav-link{{ (isset($selected_nav) && $selected_nav == 'dashboard') ? ' active' : '' }}"--}}
+               {{--href="{{ route('dashboard.index') }}">--}}
+                {{--<i class="material-icons">school</i>--}}
+                {{--<span>Dashboard</span>--}}
+            {{--</a>--}}
         {{--</li>--}}
         <li class="nav-item">
             <a class="nav-link{{ (isset($selected_nav) && $selected_nav == 'standards') ? ' active' : '' }}"

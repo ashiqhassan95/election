@@ -3,6 +3,10 @@
     Election result
 @endsection
 
+@push('page-content-title')
+    Elections Result
+@endpush
+
 @section('message')
     @includeWhen(session()->has('message'), 'dashboard.includes.session-alert-message')
 @endsection
@@ -11,8 +15,7 @@
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         <div class="col mb-0">
-            <span class="text-uppercase page-subtitle">Elections</span>
-            <h3 class="page-title">Union Election 2019 Result</h3>
+            <h3 class="page-title">{{ $election->title }}</h3>
         </div>
     </div>
 

@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,7 +9,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,10 +16,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', 'FrontEnd\HomeController@index')->name('frontend.home');
 
-Route::get('/debug', function () {
-//    return $pageName;
-    return view('dashboard.layouts.master');
-});
 
 /**
  * Generate a CSV of all the routes
@@ -57,28 +51,35 @@ Route::post('/dashboard/elections/{election}/launch', 'Dashboard\ElectionControl
     ->name('dashboard.elections.launch');
 Route::post('/dashboard/elections/{election}/complete', 'Dashboard\ElectionController@completeElection')
     ->name('dashboard.elections.complete');
-Route::get('/dashboard/election/{election}/result', 'Dashboard\ElectionController@showResult')
-    ->name('election.show.result');
-Route::post('/dashboard/election/{election}/result', 'Dashboard\ElectionController@processResult')
-    ->name('election.process.result');
 
-Route::get('/election/{slug}', 'FrontEnd\ElectionController@showCandidates')
-    ->name('election.vote');
-Route::get('/election/{slug}/login', 'Auth\VoterLoginController@showLoginForm')
-    ->name('election.vote.login');
-Route::post('/election/{slug}', 'Auth\VoterLoginController@login');
+Route::get('/dashboard/elections/{election}/result', 'Dashboard\ElectionController@showResult')
+    ->name('dashboard.elections.show.result');
 
-Route::post('/election/{slug}/caste', 'FrontEnd\ElectionController@casteVote')->name('frontend.election.vote.caste');
-Route::get('/election/{slug}/thanks', 'FrontEnd\ElectionController@thanks')->name('frontend.election.vote.thanks');
+Route::get('/dashboard/elections/{election}/voters', 'Dashboard\ElectionController@showVoters')
+    ->name('dashboard.elections.show.voters');
+Route::get('/dashboard/elections/{election}/voters/export', 'Dashboard\ElectionController@exportVoters')
+    ->name('dashboard.elections.export.voters');
+
+Route::post('/dashboard/elections/{election}/result', 'Dashboard\ElectionController@processResult')
+    ->name('elections.process.result');
+
+Route::get('/elections/{slug}', 'FrontEnd\ElectionController@showCandidates')
+    ->name('elections.vote');
+Route::get('/elections/{slug}/login', 'Auth\VoterLoginController@showLoginForm')
+    ->name('elections.vote.login');
+Route::post('/elections/{slug}', 'Auth\VoterLoginController@login');
+
+Route::post('/elections/{slug}/caste', 'FrontEnd\ElectionController@casteVote')->name('frontend.elections.vote.caste');
+Route::get('/elections/{slug}/thanks', 'FrontEnd\ElectionController@thanks')->name('frontend.elections.vote.thanks');
 
 Route::prefix('dashboard')->namespace('Dashboard')
     ->name('dashboard.')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth'])
     ->group(function () {
         /**
          * url ->  /dashboard
          */
-        Route::get('/', 'DashboardController@index')->name('index');
+//        Route::get('/', 'DashboardController@index')->name('index');
         /**
          * url -> /dashboard/candidates
          * controller -> Dashboard/CandidateController
@@ -121,16 +122,6 @@ Route::prefix('dashboard')->namespace('Dashboard')
          * name -> dashboard.users.method
          */
         Route::resource('users', 'UserController');
-        /**
-         * url -> /dashboard/users
-         * controller -> Dashboard/UserController
-         * name -> dashboard.users.method
-         */
-        Route::any('/settings/general', 'SettingController@general')->name('settings.general');
-        Route::any('/settings/institute', 'SettingController@institute')->name('settings.institute');
-        Route::any('/settings/appearance', 'SettingController@appearance')->name('settings.appearance');
-//        Route::resource('settings', 'SettingController');
     });
-
 
 Route::get('/home', 'HomeController@index')->name('home');

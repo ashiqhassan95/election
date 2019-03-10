@@ -16,6 +16,7 @@ class CreateVoteCasteTable extends Migration
         Schema::create('vote_cast', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('voter_id')->nullable();
+            $table->unsignedInteger('standard_id')->nullable();
             $table->unsignedInteger('candidate_id')->nullable();
             $table->unsignedInteger('position_id')->nullable();
             $table->unsignedInteger('election_id')->nullable();

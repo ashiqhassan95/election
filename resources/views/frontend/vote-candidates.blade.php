@@ -69,11 +69,10 @@
         </div>
     </header>
 
-    <form action="{{ route('frontend.election.vote.caste', $election->slug) }}" method="post">
+    <form action="{{ route('frontend.elections.vote.caste', $election->slug) }}" method="post">
         @csrf
         @foreach($data as $position)
             <h5 class="mb-3 mt-4 font-weight-bold">{{ $position->title }} candidates</h5>
-            {{--<div class="row">--}}
             <div class="form-row">
                 @foreach($position->candidates as $candidate)
                     <div class="col-2 mb-1">
@@ -98,9 +97,11 @@
                     @endif
                 @endforeach
             </div>
-            <div class="section-break">
+            @if(!$loop->last)
+                <div class="section-break">
 
-            </div>
+                </div>
+            @endif
         @endforeach
         <div class="form-group">
             <button class="btn btn-lg btn-success mt-5 ">Caste Your Vote</button>

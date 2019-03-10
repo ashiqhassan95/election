@@ -3,10 +3,13 @@
     Show election
 @endsection
 
+@push('page-content-title')
+    Elections
+@endpush
+
 @section('content')
     <div class="row page-header row no-gutters py-4">
         <div class="col mb-0">
-            <span class="text-uppercase page-subtitle">Elections</span>
             <h3 class="page-title">Election details</h3>
         </div>
     </div>
@@ -23,10 +26,8 @@
         </style>
     @endpush
 
-    <!-- End Page Header -->
     <div class="row">
         <div class="col-lg-6 col-md">
-            <!-- Add New Position Form -->
             <div class="card card-small mb-3">
                 <div class="card-body border-bottom">
                     <div class="entity-details">
@@ -75,13 +76,20 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <div class="col">
+                                <span>Number of candidates</span>
+                                <span>{{ $election->candidates_count }}</span>
+                            </div>
+                        </div>
+
                         @if($election->status == '1')
                             <div class="row">
                                 <div class="col">
                                     <span>Url</span>
                                     <span>
-                                        <a href="{{ route('election.vote', $election['slug']) }}"
-                                              target="_blank">{{ route('election.vote', $election['slug']) }}</a>
+                                        <a href="{{ route('elections.vote', $election['slug']) }}"
+                                              target="_blank">{{ route('elections.vote', $election['slug']) }}</a>
                                     </span>
                                 </div>
                             </div>
@@ -118,7 +126,7 @@
                                     <a href="javascript:;" onclick="document.getElementById('complete-form').submit();"
                                        class="btn btn-outline-danger">Stop and Complete</a>
                                     <a class="btn btn-outline-primary"
-                                       href="#">Show Voters</a>
+                                       href="{{ route('dashboard.elections.show.voters', $election->getKey()) }}">Show Voters</a>
                                 </div>
 
                                 <form action="{{ route('dashboard.elections.complete', $election->getKey()) }}"
@@ -129,7 +137,9 @@
                             @elseif($election['status'] == 2)
                                 <div class="btn-group" role="group">
                                     <a class="btn btn-outline-primary"
-                                       href="{{ route('election.show.result', $election->getKey()) }}">Show result</a>
+                                       href="{{ route('dashboard.elections.show.result', $election->getKey()) }}">Show result</a>
+                                    <a class="btn btn-outline-primary"
+                                       href="{{ route('dashboard.elections.show.voters', $election->getKey()) }}">Show Voters</a>
                                 </div>
                             @endif
 

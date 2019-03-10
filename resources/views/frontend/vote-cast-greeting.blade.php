@@ -31,13 +31,13 @@
 
 <script type="text/javascript">
     // Total seconds to wait
-    var seconds = 10;
+    var seconds = 1;
 
     function countdown() {
         seconds = seconds - 1;
         if (seconds < 0) {
             // Chnage your redirection link here
-            window.location = "{{ route('election.vote', $election->slug) }}";
+            window.location = "{{ route('elections.vote', $election->slug) }}";
         } else {
             // Update remaining seconds
             document.getElementById("countdown").innerHTML = seconds;

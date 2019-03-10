@@ -3,6 +3,10 @@
     Edit voter
 @endsection
 
+@push('page-content-title')
+    Voters
+@endpush
+
 @section('message')
     @includeWhen(session()->has('message'), 'dashboard.includes.session-alert-message')
 @endsection
@@ -128,7 +132,7 @@
                             @endforeach
                         </div>
 
-                        <button class="btn btn-primary"><i class="material-icons mr-1">save</i>Update</button>
+                        <button class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>

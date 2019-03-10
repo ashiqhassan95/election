@@ -3,6 +3,10 @@
     Positions
 @endsection
 
+@push('page-content-title')
+    Positions
+@endpush
+
 @push('css-head')
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.dataTables.min.css"/>
 @endpush
@@ -10,10 +14,14 @@
 @section('content')
 
     <div class="page-header row no-gutters py-4">
-        @include('dashboard.includes.data-table-top-options', [
-            'title' => 'Positions',
-            'create_link' => route('dashboard.positions.create')
-        ])
+        <div class="col-12 col-md-6 text-center text-md-left mb-4 mb-md-0">
+            <span class="page-title" style="line-height: 35px; font-weight: bold; font-size: 20px">Positions List</span>
+        </div>
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-end">
+            <div>
+                <a class="btn btn-primary" href="{{ route('dashboard.positions.create') }}">Create</a>
+            </div>
+        </div>
     </div>
 
     <table class="data-table positions-table d-none">

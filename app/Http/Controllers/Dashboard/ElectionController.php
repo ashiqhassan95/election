@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Exports\VoterCastExport;
 use App\Helper\SessionHelper;
 use App\Helper\StoreHelper;
 use App\Models\Candidate;
 use App\Models\Election;
 use App\Models\Position;
+use App\Models\Voter;
 use App\Repository\Interfaces\IElectionRepository;
 use App\User;
 use Carbon\Carbon;
@@ -15,6 +17,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 use phpDocumentor\Reflection\Types\Array_;
 
 class ElectionController extends Controller
@@ -62,8 +65,12 @@ class ElectionController extends Controller
         return redirect()->back()->with('message', __('dashboard-success.save', ['entity' => $this->className]));
     }
 
-    public function show(Election $election)
+    public function show($election)
     {
+        $election = Election::query()
+            ->withCount('candidates')
+            ->find($election);
+
         return view('dashboard.elections.show', compact('election'));
     }
 
@@ -128,17 +135,47 @@ class ElectionController extends Controller
         return redirect()->back();
     }
 
+    public function showVoters(Election $election)
+    {
+
+        $voters = Voter::query()
+            ->with('standard')
+            ->leftJoin('vote_cast', 'voters.id', '=', 'vote_cast.voter_id')
+            ->where('vote_cast.election_id', '=', $election->getKey())
+            ->select('voters.*', 'vote_cast.voted_at')
+            ->get()
+            ->unique('id')
+            ->values()
+            ->all();
+
+        return view('dashboard.elections.voters', compact('voters', 'election'));
+    }
+
+    public function exportVoters($election, Request $request)
+    {
+        $format = $request->get('format');
+        $extension = 'csv';
+
+        if($format == 'excel')
+            $extension = 'xlsx';
+        else if($format == 'csv')
+            $extension = 'csv';
+
+        return Excel::download(new VoterCastExport($election), 'voters.' . $extension);
+    }
+
     public function processResult(Request $request, Election $election)
     {
 
     }
 
-    public function showResult(Election $election)
+    public function showResult(Election $election, Request $request)
     {
         if ($election['type'] == 0) {
             return $this->showPresidentialResult($election);
         } else if ($election['type'] == 1) {
-            return $this->showParliamentaryResult($election);
+            $standard = $request->get('standard');
+            return $this->showParliamentaryResult($election, $standard);
         }
     }
 
@@ -189,32 +226,44 @@ class ElectionController extends Controller
             $data->push($position);
 
         }
+
         return view('dashboard.elections.result-presidential', compact('data', 'election'));
     }
 
-    public function showPresidentialResultOriginal(Election $election)
+    public function showParliamentaryResult(Election $election, $standard)
     {
         $data = new Collection();
-        $positionIds = Candidate::query()
+        $standards =  Candidate::query()
+            ->with(['standard'])
             ->where('election_id', $election->getKey())
-            ->distinct()
-            ->pluck('position_id');
+            ->get()
+            ->pluck('standard')
+            ->unique('id')
+            ->values();
+        $selected_standard = $standard;
+
+        $candidates = Candidate::query()
+            ->with(['voter', 'standard', 'position'])
+            ->where('standard_id', $standard)
+            ->where('election_id', $election->getKey())
+            ->get();
+
+        $positionIds = $candidates->pluck('position_id')->unique()->values();
+
         foreach ($positionIds as $positionId) {
-            $position = Position::query()->find($positionId);
-            $candidates = Candidate::query()
-                ->with(['voter', 'standard', 'position'])
-                ->where('election_id', $election->getKey())
-                ->where('position_id', $positionId)
-                ->get();
+            $staticPosition = $candidates->where('position_id', $positionId)->pluck('position')->first();
             $totalVotes = DB::table('vote_cast')
                 ->where('election_id', $election->getKey())
-                ->where('position_id', $position->getKey())
+                ->where('position_id', $positionId)
                 ->count('candidate_id');
-            $position['total_votes'] = $totalVotes;
-
-            $myCandidates = new Collection();
-            foreach ($candidates as $candidate) {
-                $myCandidates->push([
+            $position = new Position();
+            $position->id = $staticPosition['id'];
+            $position->title = $staticPosition['title'];
+            $position->total_votes = $totalVotes;
+            $candidatesOfThisPosition = $candidates->where('position_id', $position->id)->values();
+            $candidatesCollection = new Collection();
+            foreach ($candidatesOfThisPosition as $candidate) {
+                $candidatesCollection->push([
                     'id' => $candidate->id,
                     'name' => $candidate->voter->name,
                     'standard' => $candidate->standard->name,
@@ -224,26 +273,22 @@ class ElectionController extends Controller
                 ]);
             }
             $notaVoteCount = DB::table('vote_cast')
+                ->where('standard_id', $standard)
                 ->where('election_id', $election->getKey())
                 ->where('position_id', $position->getKey())
                 ->where('candidate_id', 0)
                 ->count('candidate_id');
-            $myCandidates->push([
+            $candidatesCollection->push([
                 'id' => 0,
                 'name' => 'NOTA',
                 'position' => $position->title,
                 'votes' => $notaVoteCount,
                 'percentage' => ($notaVoteCount / $totalVotes) * 100,
             ]);
-            $position['candidates'] = $myCandidates->sortByDesc('votes');
+            $position['candidates'] = $candidatesCollection->sortByDesc('votes');
             $data->push($position);
         }
-        return view('dashboard.elections.result-presidential', compact('data', 'election'));
-    }
-
-    public function showParliamentaryResult(Election $election)
-    {
-        return view('dashboard.elections.result-parliamentary');
+        return view('dashboard.elections.result-parliamentary', compact('data', 'election', 'standards', 'selected_standard'));
     }
 
 }

@@ -3,10 +3,13 @@
     Show position
 @endsection
 
+@push('page-content-title')
+    Positions
+@endpush
+
 @section('content')
     <div class="row page-header row no-gutters py-4">
         <div class="col mb-0">
-            <span class="text-uppercase page-subtitle">Positions</span>
             <h3 class="page-title">Position details</h3>
         </div>
     </div>
@@ -23,10 +26,8 @@
         </style>
     @endpush
 
-    <!-- End Page Header -->
     <div class="row">
         <div class="col-lg-6 col-md">
-            <!-- Add New Position Form -->
             <div class="card card-small mb-3">
                 <div class="card-body border-bottom">
                     <div class="entity-details">

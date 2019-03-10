@@ -1,22 +1,15 @@
 <div class="main-navbar sticky-top bg-white">
-    <!-- Main Navbar -->
     <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">
-        <form action="#" class="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
-            <div class="input-group input-group-seamless ml-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
-                <input class="navbar-search form-control" type="text" placeholder="Search for something..."
-                       aria-label="Search">
-            </div>
-        </form>
+        <div class="main-navbar__search page-header w-100 d-none d-md-flex d-lg-flex container px-4">
+            <h3 class="page-title" style="font-size: 20px">
+                @stack('page-content-title')
+            </h3>
+        </div>
         <ul class="navbar-nav border-left flex-row ">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button"
-                   aria-haspopup="true" aria-expanded="false" style="min-width: 160px;">
-                    <img class="user-avatar rounded-circle mr-2" src="/images/shards/avatars/0.jpg" alt="User Avatar">
+                <a class="nav-link dropdown-toggle text-nowrap px-3 h-100 align-content-center" data-toggle="dropdown" href="#" role="button"
+                   aria-haspopup="true" aria-expanded="false" style="min-width: 160px; line-height: 40px">
+                    <span><i class="material-icons">person</i></span>
                     <span class="d-none d-md-inline-block">{{ Auth::user()->name ?? 'not login' }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-small">
@@ -43,5 +36,4 @@
             </a>
         </nav>
     </nav>
-    <!-- / .main-navbar -->
 </div>

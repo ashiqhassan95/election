@@ -49,6 +49,4 @@ class Election extends Model
                 return 'Completed';
         }
     }
-
-
 }

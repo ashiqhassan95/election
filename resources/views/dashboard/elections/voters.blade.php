@@ -1,6 +1,6 @@
-@extends('dashboard.layouts.master', ['selected_nav' => 'voters'])
+@extends('dashboard.layouts.master', ['selected_nav' => 'elections'])
 @section('title')
-    Voters
+    Elections
 @endsection
 
 @push('page-content-title')
@@ -14,24 +14,23 @@
 @section('content')
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-md-6 text-center text-md-left mb-4 mb-md-0">
-            <span class="page-title" style="line-height: 35px; font-weight: bold; font-size: 20px">Voters List</span>
+            <span class="page-title" style="line-height: 35px; font-weight: bold; font-size: 20px">People who casted their vote</span>
         </div>
 
         <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-end">
             <div>
-                <a class="btn btn-primary" href="{{ route('dashboard.voters.create') }}">Create</a>
-                <a class="btn btn-white" href="{{ route('dashboard.voters.show.import') }}">Import</a>
                 <button class="btn btn-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">Export
                 </button>
                 <div class="dropdown-menu dropdown-menu-small">
-                    <a class="dropdown-item" href="{{ route('dashboard.voters.export') }}?format=csv">CSV</a>
-                    <a class="dropdown-item" href="{{ route('dashboard.voters.export') }}?format=excel">Excel</a>
+                    <a class="dropdown-item"
+                       href="{{ route('dashboard.elections.export.voters', $election->getKey()) }}?format=csv">CSV</a>
+                    <a class="dropdown-item"
+                       href="{{ route('dashboard.elections.export.voters', $election->getKey()) }}?format=excel">Excel</a>
                 </div>
             </div>
         </div>
     </div>
-
     <table class="data-table voters-table d-none">
         <thead>
         <tr>
@@ -42,8 +41,7 @@
             <th>Standard</th>
             <th>Gender</th>
             <th>Date of birth</th>
-            <th>Created on</th>
-            <th>Actions</th>
+            <th>Voted at</th>
         </tr>
         </thead>
         <tbody>
@@ -58,29 +56,7 @@
                 <td>{{ $voter->standard->name }}</td>
                 <td>{{ $voter->gender() }}</td>
                 <td>{{ date('Y-m-d', strtotime($voter->birth_date))  }}</td>
-                <td>{{ date('d-m-Y', strtotime($voter->created_at)) }}</td>
-                <td>
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Table row actions">
-                        <a class="btn btn-white" data-toggle="tooltip" title="make it as candidate"
-                           href="{{ route('dashboard.candidates.create') }}?voter_id={{ $voter->id }}">
-                            <i class="material-icons">person_add</i>
-                        </a>
-                        <a class="btn btn-white" data-toggle="tooltip" title="Edit"
-                           href="{{ route('dashboard.voters.edit', $voter->id) }}">
-                            <i class="material-icons">edit</i>
-                        </a>
-
-                        <a class="btn btn-white" data-toggle="tooltip" title="Delete"
-                           href="javascript:;" onclick="document.getElementById('delete-form').submit()">
-                            <i class="material-icons">delete</i>
-                        </a>
-                    </div>
-                    <form id="delete-form" action="{{ route('dashboard.voters.destroy', $voter->id) }}"
-                          method="post">
-                        @csrf
-                        @method('delete')
-                    </form>
-                </td>
+                <td class="text-danger">{{ date('g:i:s A, d-m-Y', strtotime($voter->voted_at)) }}</td>
             </tr>
         @empty
             <tr>

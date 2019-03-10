@@ -11,5 +11,6 @@ return [
     'save' => ':entity has been saved successfully',
     'update' => ':entity information has been updated successfully',
     'delete' => ':entity has been deleted successfully',
+    'import' => 'Successfully imported',
 
 ];

@@ -32,4 +32,9 @@ class Voter extends Model
         if ($this['gender'] == 1)  return 'Female';
         if ($this['gender'] == 2)  return 'Other';
     }
+
+    public function voteCast()
+    {
+        return $this->belongsTo('vote_cast', 'voter_id');
+    }
 }

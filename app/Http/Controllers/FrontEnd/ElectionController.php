@@ -90,6 +90,7 @@ class ElectionController extends Controller
             $candidateId = $request->get($positionKey);
             DB::table('vote_cast')->insert([
                 'voter_id' => $voter->getKey(),
+                'standard_id' => $voter['standard_id'],
                 'candidate_id' => $candidateId,
                 'position_id' => $positionId,
                 'election_id' => $election->getKey(),
@@ -101,7 +102,7 @@ class ElectionController extends Controller
             }
         }
         session()->forget('voter_uid');
-        return redirect()->route('frontend.election.vote.thanks', $slug);
+        return redirect()->route('frontend.elections.vote.thanks', $slug);
     }
 
     public function casteVoteAsDefaultNOTA(Request $request, $slug)
@@ -145,7 +146,7 @@ class ElectionController extends Controller
             }
         }
         session()->forget('voter_uid');
-        return redirect()->route('frontend.election.vote.thanks', $slug);
+        return redirect()->route('frontend.elections.vote.thanks', $slug);
     }
 
     public function thanks($slug)

@@ -3,6 +3,10 @@
     Create position
 @endsection
 
+@push('page-content-title')
+    Positions
+@endpush
+
 @section('message')
     @includeWhen(session()->has('message'), 'dashboard.includes.session-alert-message')
 @endsection

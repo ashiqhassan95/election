@@ -3,6 +3,10 @@
     Edit election
 @endsection
 
+@push('page-content-title')
+    Elections
+@endpush
+
 @section('message')
     @includeWhen(session()->has('message'), 'dashboard.includes.session-alert-message')
 @endsection
@@ -44,7 +48,7 @@
                                 <option value="1" {{ $election->type == 1 ? 'selected':'' }}>Parliamentary</option>
                             </select>
                         </div>
-                        <button class="btn btn-primary"><i class="material-icons mr-1">save</i>Update</button>
+                        <button class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>

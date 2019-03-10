@@ -3,6 +3,10 @@
     Create election
 @endsection
 
+@push('page-content-title')
+    Elections
+@endpush
+
 @section('message')
     @includeWhen(session()->has('message'), 'dashboard.includes.session-alert-message')
 @endsection

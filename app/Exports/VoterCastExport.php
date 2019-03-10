@@ -2,27 +2,37 @@
 
 namespace App\Exports;
 
-use App\Helper\SessionHelper;
 use App\Models\Voter;
-use Maatwebsite\Excel\Concerns\Exportable;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class VotersExport implements FromCollection, WithHeadings, WithMapping, ShouldAutoSize
+class VoterCastExport implements FromCollection, WithHeadings, WithMapping, ShouldAutoSize
 {
-    use Exportable;
+    private $election;
+
+    public function __construct($election)
+    {
+
+        $this->election = $election;
+    }
 
     /**
-     * @return \Illuminate\Support\Collection
-     */
+    * @return \Illuminate\Support\Collection
+    */
     public function collection()
     {
-        return Voter::query()
-            ->with(['standard'])
-            ->where('institute_id', SessionHelper::getInstitute())
-            ->get();
+        return new Collection(Voter::query()
+            ->with('standard')
+            ->leftJoin('vote_cast', 'voters.id', '=', 'vote_cast.voter_id')
+            ->where('vote_cast.election_id', '=', $this->election)
+            ->select('voters.*', 'vote_cast.voted_at')
+            ->get()
+            ->unique('id')
+            ->values()
+            ->all());
     }
 
     /**
@@ -38,6 +48,7 @@ class VotersExport implements FromCollection, WithHeadings, WithMapping, ShouldA
             'Standard',
             'Gender',
             'Date of birth',
+            'Voted at',
         ];
     }
 
@@ -55,6 +66,7 @@ class VotersExport implements FromCollection, WithHeadings, WithMapping, ShouldA
             $row->standard->name,
             $row->gender == 0 ? 'Male' : 'Female',
             $row->birth_date,
+            $row->voted_at
         ];
     }
 }

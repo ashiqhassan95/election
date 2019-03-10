@@ -3,6 +3,10 @@
     Edit standard
 @endsection
 
+@push('page-content-title')
+    Standards
+@endpush
+
 @section('message')
     @includeWhen(session()->has('message'), 'dashboard.includes.session-alert-message')
 @endsection
@@ -32,7 +36,7 @@
                                 </span>
                             @endforeach
                         </div>
-                        <button class="btn btn-primary"><i class="material-icons mr-1">save</i>Update</button>
+                        <button class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>

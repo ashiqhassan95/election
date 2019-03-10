@@ -24,7 +24,7 @@
                                          src="/images/shards/shards-dashboards-logo.svg"
                                          alt="Shards Dashboards - Register Template">
                                     <h4 class="auth-form__title text-center mb-4">{{ $institute->name }}</h4>
-                                    <form action="/election/{{ $election['slug'] }}" method="post">
+                                    <form action="/elections/{{ $election['slug'] }}" method="post">
                                         @csrf
                                         <div class="form-group">
                                             <label for="uidInput">Enter UID</label>

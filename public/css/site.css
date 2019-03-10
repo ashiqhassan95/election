@@ -104,7 +104,13 @@
 }
 
 .phpdebugbar {
-    display: none;
+    /*display: none;*/
 }
+
+/*.page-header .text-uppercase {*/
+    /*font-weight: 400; */
+/*}*/
+
+
 
 

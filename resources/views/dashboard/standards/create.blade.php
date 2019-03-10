@@ -3,6 +3,10 @@
     Create standards
 @endsection
 
+@push('page-content-title')
+    Standards
+@endpush
+
 @section('message')
     @includeWhen(session()->has('message'), 'dashboard.includes.session-alert-message')
 @endsection

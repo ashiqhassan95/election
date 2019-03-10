@@ -117,11 +117,15 @@ class VoterController extends Controller
         return redirect()->route('dashboard.voters.index');
     }
 
-    public function export($format)
+    public function export(Request $request)
     {
+        $format = $request->get('format');
         $extension = 'csv';
-        if($format == 'excel') $extension = 'xlsx';
-        else if($format == 'csv') $extension = 'csv';
+
+        if($format == 'excel')
+            $extension = 'xlsx';
+        else if($format == 'csv')
+            $extension = 'csv';
 
         return Excel::download(new VotersExport(), 'voters.' . $extension);
     }
@@ -136,10 +140,9 @@ class VoterController extends Controller
         $this->validate($request, [
             'file' => 'required|file'//|mimes:csv,xlsx,xls'
         ]);
-//        return $request->file('file')->get();
 
-        $import = Excel::import(new VotersImport(), $request->file('file'));
-        return redirect()->back();
+        Excel::import(new VotersImport(), $request->file('file'));
+        return redirect()->back()->with('message', __('dashboard-success.import', ['entity' => $this->className]));
     }
 
     public function importComplicated(Request $request)
